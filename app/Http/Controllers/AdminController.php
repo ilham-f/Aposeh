@@ -10,13 +10,23 @@ use App\Models\Keluhan;
 class AdminController extends Controller
 {
     public function index(){
-        return view('admin.admin',[
+        return view('manajemen.manajemen',[
             'title' => 'Dashboard'
+        ]);
+    }
+    public function tes(){
+        return view('manajemen.test',[
+            'title' => ''
+        ]);
+    }
+    public function form(){
+        return view('manajemen.form',[
+            'title' => ''
         ]);
     }
 
     public function tabelobat(){
-        return view('admin.obat', [
+        return view('manajemen.obat', [
             'obats' => Obat::all(),
             'categories' => Category::all(),
             'title' => 'Tabel Obat',
@@ -25,33 +35,33 @@ class AdminController extends Controller
     }
 
     // public function tambahobat(){
-    //     return view('admin.tambahobat', [
+    //     return view('manajemen.tambahobat', [
     //         'title' => 'Tambah Obat'
     //     ]);
     // }
 
     public function tabelkategori(){
-        return view('admin.kategori',[
+        return view('manajemen.kategori',[
             'categories' => Category::all(),
             'title' => 'Tabel Kategori'
         ]);
     }
 
     // public function tambahkategori(){
-    //     return view('admin.tambahkategori',[
+    //     return view('manajemen.tambahkategori',[
     //         'title' => 'Tambah Kategori'
     //     ]);
     // }
 
     public function tabelkeluhan(){
-        return view('admin.keluhan',[
+        return view('manajemen.keluhan',[
             'keluhans' => Keluhan::all(),
             'title' => 'Tabel Keluhan'
         ]);
     }
 
     // public function tambahkeluhan(){
-    //     return view('admin.tambahkeluhan',[
+    //     return view('manajemen.tambahkeluhan',[
     //         'title' => 'Tambah Keluhan'
     //     ]);
     // }

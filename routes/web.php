@@ -25,10 +25,10 @@ use App\Http\Controllers\GoogleController;
 
 // Customer tanpa login
 Route::get('/', [HomeController::class, 'index'])->name('home');
-Route::get('/produk', [ObatController::class, 'index']);
-Route::get('produk/{obat:slug}', [ObatController::class, 'show']);
-Route::get('/categories', [CategoryController::class, 'index']);
-Route::get('categories/{category:slug}', [CategoryController::class, 'show']);
+// Route::get('/produk', [ObatController::class, 'index']);
+// Route::get('produk/{obat:slug}', [ObatController::class, 'show']);
+// Route::get('/categories', [CategoryController::class, 'index']);
+// Route::get('categories/{category:slug}', [CategoryController::class, 'show']);
 
 // User Regis
 Route::post('/regis', [RegisterController::class, 'store']);
@@ -42,33 +42,45 @@ Route::get('/auth/redirect', [GoogleController::class, 'redirectToGoogle']);
 Route::get('/google/callback', [GoogleController::class, 'handleGoogleCallback']);
 
 // Middleware cek role
+Route::get('/admin', [AdminController::class, 'index']);
+Route::get('/tes', [AdminController::class, 'tes']);
+Route::get('/form', [AdminController::class, 'form']);
 Route::group(['middleware' => 'auth'], function() {
 
     // Halaman yang bisa diakses oleh Admin
-    Route::group(['middleware' => 'cekrole:admin'], function() {
-        Route::get('/admin', [AdminController::class, 'index']);
-        Route::get('/tabelobat', [AdminController::class, 'tabelobat']);
-        Route::get('/tambahobat', [AdminController::class, 'tambahobat']);
-        Route::get('/tabelkategori', [AdminController::class, 'tabelkategori']);
-        Route::get('/tambahkategori', [AdminController::class, 'tambahkategori']);
-        Route::get('/tabelkeluhan', [AdminController::class, 'tabelkeluhan']);
-        Route::get('/tambahkeluhan', [AdminController::class, 'tambahkeluhan']);
+    Route::group(['middleware' => 'cekrole:manajemen'], function() {
+        Route::get('/manajemen', [AdminController::class, 'index']);
+        // Route::get('/tabelobat', [AdminController::class, 'tabelobat']);
+        // Route::get('/tambahobat', [AdminController::class, 'tambahobat']);
+        // Route::get('/tabelkategori', [AdminController::class, 'tabelkategori']);
+        // Route::get('/tambahkategori', [AdminController::class, 'tambahkategori']);
+        // Route::get('/tabelkeluhan', [AdminController::class, 'tabelkeluhan']);
+        // Route::get('/tambahkeluhan', [AdminController::class, 'tambahkeluhan']);
+    });
+
+    Route::group(['middleware' => 'cekrole:pegawai'], function() {
+        // Route::get('/tabelobat', [AdminController::class, 'tabelobat']);
+        // Route::get('/tambahobat', [AdminController::class, 'tambahobat']);
+        // Route::get('/tabelkategori', [AdminController::class, 'tabelkategori']);
+        // Route::get('/tambahkategori', [AdminController::class, 'tambahkategori']);
+        // Route::get('/tabelkeluhan', [AdminController::class, 'tabelkeluhan']);
+        // Route::get('/tambahkeluhan', [AdminController::class, 'tambahkeluhan']);
     });
 
     // Halaman yang bisa diakses oleh Customer
     Route::group(['middleware' => 'cekrole:customer'], function() {
-        Route::get('/afterpmblian', [TransaksiController::class, 'after'])->name('after');
-        Route::get('/kirimresep', [UserController::class, 'resep']);
         Route::get('/profile', [UserController::class, 'profile']);
         Route::get('/ubahpwd', [UserController::class, 'ubahpw']);
-        Route::get('/rwytpmblian', [TransaksiController::class, 'index']);
-        Route::get('/keranjang', [CartController::class, 'index'])->name('cart.list');
-        Route::post('/detailproduk', [CartController::class, 'addToCart'])->name('cart.store');
-        Route::post('cart-remove', [CartController::class, 'removeCart'])->name('cart.remove');
-        Route::post('update-cart', [CartController::class, 'updateCart'])->name('cart.update');
-        Route::post('/keranjang', [TransaksiController::class, 'buat'])->name('transaksi.store');
-        Route::get('pembelian/{transaksi:id}', [TransaksiController::class, 'show']);
-        Route::post('cart-clear', [CartController::class, 'clearCart'])->name('cart.clear');
+        // Route::get('/afterpmblian', [TransaksiController::class, 'after'])->name('after');
+        // Route::get('/kirimresep', [UserController::class, 'resep']);
+        // Route::get('/rwytpmblian', [TransaksiController::class, 'index']);
+        // Route::get('/keranjang', [CartController::class, 'index'])->name('cart.list');
+        // Route::post('/detailproduk', [CartController::class, 'addToCart'])->name('cart.store');
+        // Route::post('cart-remove', [CartController::class, 'removeCart'])->name('cart.remove');
+        // Route::post('update-cart', [CartController::class, 'updateCart'])->name('cart.update');
+        // Route::post('/keranjang', [TransaksiController::class, 'buat'])->name('transaksi.store');
+        // Route::get('pembelian/{transaksi:id}', [TransaksiController::class, 'show']);
+        // Route::post('cart-clear', [CartController::class, 'clearCart'])->name('cart.clear');
     });
 });
 
