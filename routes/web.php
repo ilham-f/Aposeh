@@ -7,7 +7,7 @@ use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\HomeController;
-use App\Http\Controllers\AdminController;
+use App\Http\Controllers\PegawaiController;
 use App\Http\Controllers\TransaksiController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\GoogleController;
@@ -42,29 +42,29 @@ Route::get('/auth/redirect', [GoogleController::class, 'redirectToGoogle']);
 Route::get('/google/callback', [GoogleController::class, 'handleGoogleCallback']);
 
 // Middleware cek role
-Route::get('/admin', [AdminController::class, 'index']);
-Route::get('/tes', [AdminController::class, 'tes']);
-Route::get('/form', [AdminController::class, 'form']);
+Route::get('/admin', [PegawaiController::class, 'index']);
+Route::get('/tes', [PegawaiController::class, 'tes']);
+Route::get('/form', [PegawaiController::class, 'form']);
 Route::group(['middleware' => 'auth'], function() {
 
     // Halaman yang bisa diakses oleh Admin
     Route::group(['middleware' => 'cekrole:manajemen'], function() {
-        Route::get('/manajemen', [AdminController::class, 'index']);
-        // Route::get('/tabelobat', [AdminController::class, 'tabelobat']);
-        // Route::get('/tambahobat', [AdminController::class, 'tambahobat']);
-        // Route::get('/tabelkategori', [AdminController::class, 'tabelkategori']);
-        // Route::get('/tambahkategori', [AdminController::class, 'tambahkategori']);
-        // Route::get('/tabelkeluhan', [AdminController::class, 'tabelkeluhan']);
-        // Route::get('/tambahkeluhan', [AdminController::class, 'tambahkeluhan']);
+        Route::get('/manajemen', [PegawaiController::class, 'index']);
+        // Route::get('/tabelobat', [PegawaiController::class, 'tabelobat']);
+        // Route::get('/tambahobat', [PegawaiController::class, 'tambahobat']);
+        // Route::get('/tabelkategori', [PegawaiController::class, 'tabelkategori']);
+        // Route::get('/tambahkategori', [PegawaiController::class, 'tambahkategori']);
+        // Route::get('/tabelkeluhan', [PegawaiController::class, 'tabelkeluhan']);
+        // Route::get('/tambahkeluhan', [PegawaiController::class, 'tambahkeluhan']);
     });
 
     Route::group(['middleware' => 'cekrole:pegawai'], function() {
-        // Route::get('/tabelobat', [AdminController::class, 'tabelobat']);
-        // Route::get('/tambahobat', [AdminController::class, 'tambahobat']);
-        // Route::get('/tabelkategori', [AdminController::class, 'tabelkategori']);
-        // Route::get('/tambahkategori', [AdminController::class, 'tambahkategori']);
-        // Route::get('/tabelkeluhan', [AdminController::class, 'tabelkeluhan']);
-        // Route::get('/tambahkeluhan', [AdminController::class, 'tambahkeluhan']);
+        // Route::get('/tabelobat', [PegawaiController::class, 'tabelobat']);
+        // Route::get('/tambahobat', [PegawaiController::class, 'tambahobat']);
+        // Route::get('/tabelkategori', [PegawaiController::class, 'tabelkategori']);
+        // Route::get('/tambahkategori', [PegawaiController::class, 'tambahkategori']);
+        // Route::get('/tabelkeluhan', [PegawaiController::class, 'tabelkeluhan']);
+        // Route::get('/tambahkeluhan', [PegawaiController::class, 'tambahkeluhan']);
     });
 
     // Halaman yang bisa diakses oleh Customer

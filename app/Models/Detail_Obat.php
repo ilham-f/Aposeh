@@ -5,14 +5,14 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Category extends Model
+class Detail_Obat extends Model
 {
     use HasFactory;
 
-    protected $guarded = ['id'];
+    protected $table = 'detail_obats';
 
-    public function programs()
+    public function members()
     {
-        return $this->hasMany(Programs::class);
+        return $this->belongsTo(Member::class);
     }
 }

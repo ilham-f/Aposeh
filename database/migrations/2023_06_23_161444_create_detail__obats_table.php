@@ -13,11 +13,12 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('transaksis', function (Blueprint $table) {
+        Schema::create('detail__obats', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
-            $table->foreignId('program_id')->constrained('programs')->onDelete('cascade');
-            $table->integer('jmlbayar')->nullable();
+            $table->foreignId('obat_id')->constrained('obats')->onDelete('cascade');
+            $table->foreignId('pembelian_id')->constrained('pembelians')->onDelete('cascade');
+            $table->integer('harga')->nullable();
+            $table->dateTime('estimasi_habis')->nullable();
             $table->timestamps();
         });
     }
@@ -29,6 +30,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('transaksis');
+        Schema::dropIfExists('detail__obats');
     }
 };
