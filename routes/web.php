@@ -24,11 +24,19 @@ use App\Http\Controllers\GoogleController;
 */
 
 // Customer tanpa login
+<<<<<<< Updated upstream
 Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('/produk', [ObatController::class, 'index']);
 Route::get('produk/{obat:slug}', [ObatController::class, 'show']);
 Route::get('/categories', [CategoryController::class, 'index']);
 Route::get('categories/{category:slug}', [CategoryController::class, 'show']);
+=======
+Route::get('/', [HomeController::class, 'index']);
+// Route::get('/produk', [ObatController::class, 'index']);
+// Route::get('produk/{obat:slug}', [ObatController::class, 'show']);
+// Route::get('/categories', [CategoryController::class, 'index']);
+// Route::get('categories/{category:slug}', [CategoryController::class, 'show']);
+>>>>>>> Stashed changes
 
 // User Regis
 Route::post('/regis', [RegisterController::class, 'store']);
