@@ -25,10 +25,6 @@ use App\Http\Controllers\GoogleController;
 
 // Customer tanpa login
 Route::get('/', [HomeController::class, 'index'])->name('home');
-// Route::get('/produk', [ObatController::class, 'index']);
-// Route::get('produk/{obat:slug}', [ObatController::class, 'show']);
-// Route::get('/categories', [CategoryController::class, 'index']);
-// Route::get('categories/{category:slug}', [CategoryController::class, 'show']);
 
 // User Regis
 Route::post('/regis', [RegisterController::class, 'store']);

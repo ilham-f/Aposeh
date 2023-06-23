@@ -10,18 +10,6 @@ use App\Models\Category;
 class HomeController extends Controller
 {
     public function index(){
-        if (Auth::user()) {
-            $userid = Auth::user()->id;
-            return view('user.home-page',[
-                // 'obats' => Obat::all(),
-                // 'categories' => Category::all()
-            ]);
-        }
-        else{
-            return view('user.home-page',[
-                // 'obats' => Obat::all(),
-                // 'categories' => Category::all()
-            ]);
-        }
+        return view('sign-in');
     }
 }
