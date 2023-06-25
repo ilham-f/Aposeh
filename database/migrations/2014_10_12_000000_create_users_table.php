@@ -21,12 +21,7 @@ class CreateUsersTable extends Migration
             $table->string('role');
             $table->string('nama')->nullable();
             $table->string('alamat')->nullable();
-            $table->string('notelp')->nullable();
-            $table->integer('anonim')->nullable();
-            $table->integer('jk')->nullable();
-            $table->integer('jml_donasi')->nullable();
-            $table->string('image')->nullable();
-            $table->string('doa')->nullable();
+            $table->string('notelp')->unique();
             $table->rememberToken();
             $table->timestamps();
         });
