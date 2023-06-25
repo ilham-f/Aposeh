@@ -10,11 +10,11 @@ class LoginController extends Controller
 {
     public function index(){
         if(Auth::user()){
-            if(Auth::user()->role == 'admin'){
-                return redirect()->intended('/admin');
+            if(Auth::user()->role == 'manajemen'){
+                return redirect()->intended('/manajemen');
             }
-            else if(Auth::user()->role == 'customer'){
-                return redirect()->intended('/');
+            else if(Auth::user()->role == 'pegawai'){
+                return redirect()->intended('/pegawai');
             }
         }
         return view('/');
@@ -31,11 +31,11 @@ class LoginController extends Controller
         if (Auth::attempt($credentials)) {
             $request->session()->regenerate();
             // return redirect()->intended('/');
-            if(Auth::user()->role == 'admin'){
-                return redirect()->intended('/admin');
+            if(Auth::user()->role == 'manajemen'){
+                return redirect()->intended('/manajemen');
             }
             else{
-                return redirect()->intended('/');
+                return redirect()->intended('/pegawai');
             }
         }
 

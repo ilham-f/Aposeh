@@ -13,12 +13,17 @@ class PegawaiController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(){
+    public function manajemen(){
         return view('manajemen.manajemen',[
             'title' => 'Dashboard'
         ]);
     }
-    
+    public function pegawai(){
+        return view('pegawai.pegawai',[
+            'title' => 'Dashboard'
+        ]);
+    }
+
     public function tes(){
         return view('manajemen.test',[
             'title' => ''
