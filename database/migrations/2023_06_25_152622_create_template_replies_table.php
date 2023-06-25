@@ -13,11 +13,10 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('obats', function (Blueprint $table) {
+        Schema::create('template_replies', function (Blueprint $table) {
             $table->id();
-            $table->string('nama_obat');
-            $table->integer('stok');
-            $table->integer('harga');
+            $table->string('reply_chat');
+            $table->string('keyword');
             $table->timestamps();
         });
     }
@@ -29,6 +28,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('obats');
+        Schema::dropIfExists('template_replies');
     }
 };

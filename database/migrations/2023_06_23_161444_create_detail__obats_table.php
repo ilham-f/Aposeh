@@ -17,7 +17,10 @@ return new class extends Migration
             $table->id();
             $table->foreignId('obat_id')->constrained('obats')->onDelete('cascade');
             $table->foreignId('pembelian_id')->constrained('pembelians')->onDelete('cascade');
-            $table->integer('harga')->nullable();
+            $table->integer('jml_obat')->nullable();
+            $table->integer('subtotal')->nullable();
+            $table->integer('dosis_hari')->nullable();
+            $table->integer('dosis_obat')->nullable();
             $table->dateTime('estimasi_habis')->nullable();
             $table->timestamps();
         });

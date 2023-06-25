@@ -9,7 +9,7 @@ class Detail_Obat extends Model
 {
     use HasFactory;
 
-    protected $table = 'detail_obats';
+    protected $table = 'detail__obats';
 
     public function members()
     {

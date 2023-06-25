@@ -14,7 +14,7 @@ class Member extends Model
         return $this->belongsTo(Users::class);
     }
 
-    public function detail_obats()
+    public function detail__obats()
     {
         return $this->hasMany(Detail_Obat::class);
     }

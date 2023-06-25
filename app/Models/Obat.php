@@ -11,6 +11,6 @@ class Obat extends Model
 
     public function pembelians()
     {
-        return $this->belongsToMany(Pembelian::class, 'detail_obat')->withPivot('estimasi_habis','harga');
+        return $this->belongsToMany(Pembelian::class, 'detail__obats')->withPivot('estimasi_habis','harga');
     }
 }
