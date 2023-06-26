@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang="en">
 <head>
-    <title>Webleb</title>
+    <title>Aposeh</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="stylesheet" href="https://unicons.iconscout.com/release/v2.1.9/css/unicons.css">
@@ -26,16 +26,19 @@
 									<div class="center-wrap">
 										<div class="section text-center">
 											<h4 class="mb-4 pb-3">Log In</h4>
-											<div class="form-group">
-												<input type="email" class="form-style" placeholder="Email">
-												<i class="input-icon uil uil-at"></i>
-											</div>
-											<div class="form-group mt-2">
-												<input type="password" class="form-style" placeholder="Password">
-												<i class="input-icon uil uil-lock-alt"></i>
-											</div>
-											<a href="https://www.web-leb.com/code" class="btn mt-4">Login</a>
-                                            <p class="mb-0 mt-4 text-center"><a href="https://www.web-leb.com/code" class="link">Forgot your password?</a></p>
+                                            <form action="/login" method="post">
+                                                @csrf
+                                                <div class="form-group">
+                                                    <input name="notelp" type="tel" class="form-style" placeholder="No. Telepon">
+                                                    <i class="input-icon uil uil-phone"></i>
+                                                </div>
+                                                <div class="form-group mt-2">
+                                                    <input name="password" type="password" class="form-style" placeholder="Password">
+                                                    <i class="input-icon uil uil-lock-alt"></i>
+                                                </div>
+                                                <button type="submit" class="btn mt-4">Login</button type="submit">
+                                            </form>
+                                            {{-- <p class="mb-0 mt-4 text-center"><a href="" class="link">Forgot your password?</a></p> --}}
 				      					</div>
 			      					</div>
 			      				</div>
@@ -43,23 +46,26 @@
 									<div class="center-wrap">
 										<div class="section text-center">
 											<h4 class="mb-3 pb-3">Sign Up</h4>
-											<div class="form-group">
-												<input type="text" class="form-style" placeholder="Full Name">
-												<i class="input-icon uil uil-user"></i>
-											</div>
-											<div class="form-group mt-2">
-												<input type="tel" class="form-style" placeholder="Phone Number">
-												<i class="input-icon uil uil-phone"></i>
-											</div>
-                                            <div class="form-group mt-2">
-												<input type="email" class="form-style" placeholder="Email">
-												<i class="input-icon uil uil-at"></i>
-											</div>
-											<div class="form-group mt-2">
-												<input type="password" class="form-style" placeholder="Password">
-												<i class="input-icon uil uil-lock-alt"></i>
-											</div>
-											<a href="https://www.web-leb.com/code" class="btn mt-4">Register</a>
+                                            <form action="/regis" method="post">
+                                                @csrf
+                                                <div class="form-group">
+                                                    <input name="nama" type="text" class="form-style" placeholder="Full Name">
+                                                    <i class="input-icon uil uil-user"></i>
+                                                </div>
+                                                <div class="form-group mt-2">
+                                                    <input name="notelp" type="tel" class="form-style" placeholder="Phone Number">
+                                                    <i class="input-icon uil uil-phone"></i>
+                                                </div>
+                                                <div class="form-group mt-2">
+                                                    <input name="password" type="password" class="form-style" placeholder="Password">
+                                                    <i class="input-icon uil uil-lock-alt"></i>
+                                                </div>
+                                                <div class="form-group mt-2">
+                                                    <input name="password_confirmation" type="password" class="form-style" placeholder="Password Confirmation">
+                                                    <i class="input-icon uil uil-lock-alt"></i>
+                                                </div>
+                                                <button type="submit" class="btn mt-4">Register</button>
+                                            </form>
 				      					</div>
 			      					</div>
 			      				</div>

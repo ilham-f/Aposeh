@@ -9,21 +9,13 @@ use Illuminate\Support\Facades\Auth;
 class LoginController extends Controller
 {
     public function index(){
-        if(Auth::user()){
-            if(Auth::user()->role == 'manajemen'){
-                return redirect()->intended('/manajemen');
-            }
-            else if(Auth::user()->role == 'pegawai'){
-                return redirect()->intended('/pegawai');
-            }
-        }
-        return view('/');
+        return view('sign-in');
     }
 
     public function authenticate(Request $request)
     {
         $credentials = $request->validate([
-            'email' => ['required', 'email:rfc,dns'],
+            'notelp' => ['required'],
             'password' => ['required'],
         ]);
 

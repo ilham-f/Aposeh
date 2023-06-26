@@ -11,13 +11,12 @@ class RegisterController extends Controller
 {
     public function store(Request $request)
     {
+        // dd($request);
         $validated = $request->validate([
             'nama' => ['required'],
-            'email' => ['required', 'email:rfc,dns', 'unique:users'],
-            'alamat' => ['required'],
-            'password' => ['required', 'max:45'],
+            'notelp' => ['required', 'unique:users'],
+            'password' => ['required', 'max:15'],
             'password_confirmation' => ['required', 'same:password']
-
         ]);
         // dd($validated);
 
