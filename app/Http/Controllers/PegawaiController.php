@@ -18,8 +18,15 @@ class PegawaiController extends Controller
             'title' => 'Dashboard'
         ]);
     }
+
     public function pegawai(){
         return view('pegawai.pegawai',[
+            'title' => 'Dashboard'
+        ]);
+    }
+
+    public function member(){
+        return view('pegawai.member',[
             'title' => 'Dashboard'
         ]);
     }
