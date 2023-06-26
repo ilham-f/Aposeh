@@ -55,6 +55,18 @@ function data() {
     toggleObatMenu() {
       this.isObatMenuOpen = !this.isObatMenuOpen
     },
+    isPegawaiMenuOpen: false,
+    togglePegawaiMenu() {
+      this.isPegawaiMenuOpen = !this.isPegawaiMenuOpen
+    },
+    isMemberMenuOpen: false,
+    toggleMemberMenu() {
+      this.isMemberMenuOpen = !this.isMemberMenuOpen
+    },
+    isRekapMenuOpen: false,
+    toggleRekapMenu() {
+      this.isRekapMenuOpen = !this.isRekapMenuOpen
+    },
     // Modal
     isModalOpen: false,
     trapCleanup: null,
