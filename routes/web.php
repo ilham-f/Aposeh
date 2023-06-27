@@ -57,7 +57,14 @@ Route::group(['middleware' => 'auth'], function() {
     });
 
     Route::group(['middleware' => 'cekrole:pegawai'], function() {
+<<<<<<< Updated upstream
         Route::get('/manajemen', [PegawaiController::class, 'pegawai']);
+=======
+        Route::get('/pegawai', [PegawaiController::class, 'pegawai']);
+        Route::get('/pegawai', [PegawaiController::class, 'charts']);
+
+        Route::get('/ubahpwd', [UserController::class, 'ubahpw']);
+>>>>>>> Stashed changes
         // Route::get('/tabelobat', [PegawaiController::class, 'tabelobat']);
         // Route::get('/tambahobat', [PegawaiController::class, 'tambahobat']);
         // Route::get('/tabelkategori', [PegawaiController::class, 'tabelkategori']);
