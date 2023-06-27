@@ -477,19 +477,43 @@
             <h4 class="mb-4 font-semibold text-gray-800 dark:text-gray-300">
                 Traffic
             </h4>
-            <canvas id="line"></canvas>
             <div class="flex justify-center mt-4 space-x-3 text-sm text-gray-600 dark:text-gray-400">
-                <!-- Chart legend -->
-                <div class="flex items-center">
-                    <span class="inline-block w-3 h-3 mr-1 bg-teal-600 rounded-full"></span>
-                    <span>Organic</span>
-                </div>
-                <div class="flex items-center">
-                    <span class="inline-block w-3 h-3 mr-1 bg-purple-600 rounded-full"></span>
-                    <span>Paid</span>
-                </div>
+                <div id="grafik"></div>
             </div>
         </div>
     </div>
     </div>
+
+    <script src="https://code.highcharts.com/highcharts.js"></script>
+    <script type="text/javascript">
+    var pasien = <?php echo json_encode($jumlahPasien) ?>;
+    var bulan = <?php echo json_encode($bulan) ?>;
+    Highcharts.chart('grafik', {
+        title : {
+            text: 'Grafik Pasien setiap Bulan'
+        },
+        xAxis : {
+            categories : bulan
+        },
+        yAxis : {
+            title : {
+                text : 'Jumlah pasien Bulanan'
+            }
+        },
+        plotOptions: {
+            series: {
+                allowPointSelect:true
+            }
+        },
+        series: [
+            {
+                name: 'Jumlah Pasien',
+                data: pasien
+            }
+        ]
+
+    });
+    </script>
+
 @endsection
+

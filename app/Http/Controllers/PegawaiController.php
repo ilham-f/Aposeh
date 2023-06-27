@@ -5,6 +5,10 @@ namespace App\Http\Controllers;
 use App\Models\Pegawai;
 use App\Http\Requests\StorePegawaiRequest;
 use App\Http\Requests\UpdatePegawaiRequest;
+use Illuminate\Support\Facades\Auth;
+use App\Models\Member;
+use Carbon\Carbon;
+use DB;
 
 class PegawaiController extends Controller
 {
@@ -43,6 +47,19 @@ class PegawaiController extends Controller
         ]);
     }
 
+    public function charts(){
+        $jumlahPasien = Member::select(DB::raw('COUNT(*) as jumlahPasien'))
+    ->groupBy(DB::raw('MONTH(created_at)'))
+    ->pluck('jumlahPasien');
+
+
+    $bulan = Member::select(DB::raw('MONTHNAME(created_at) as bulan'))
+    ->groupBy(DB::raw('MONTHNAME(created_at)'))
+    ->pluck('bulan');
+
+
+        return view('pegawai.pegawai', compact('jumlahPasien', 'bulan'));
+    }
     /**
      * Show the form for creating a new resource.
      *
