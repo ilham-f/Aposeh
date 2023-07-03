@@ -6,7 +6,7 @@ use App\Http\Controllers\LoginController;
 use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\PegawaiController;
 use App\Http\Controllers\UserController;
-// use App\Http\Controllers\GoogleController;
+use App\Http\Controllers\ObatController;
 
 /*
 |--------------------------------------------------------------------------
@@ -20,8 +20,10 @@ use App\Http\Controllers\UserController;
 */
 
 // Customer tanpa login
-
 Route::get('/', [LoginController::class, 'index']);
+
+// Webhook
+Route::any('/webhook', [WebhookController::class, 'index']);
 // Route::get('/produk', [ObatController::class, 'index']);
 // Route::get('produk/{obat:slug}', [ObatController::class, 'show']);
 // Route::get('/categories', [CategoryController::class, 'index']);
@@ -39,15 +41,16 @@ Route::post('/logout', [LoginController::class, 'logout']);
 // Route::get('/google/callback', [GoogleController::class, 'handleGoogleCallback']);
 
 // Middleware cek role
-Route::get('/admin', [PegawaiController::class, 'index']);
-Route::get('/tes', [PegawaiController::class, 'tes']);
-Route::get('/form', [PegawaiController::class, 'form']);
+// Route::get('/admin', [PegawaiController::class, 'index']);
+// Route::get('/tes', [PegawaiController::class, 'tes']);
+// Route::get('/form', [PegawaiController::class, 'form']);
 
 Route::group(['middleware' => 'auth'], function() {
 
     // Halaman yang bisa diakses oleh Admin
     Route::group(['middleware' => 'cekrole:manajemen'], function() {
         Route::get('/manajemen', [PegawaiController::class, 'manajemen']);
+        Route::get('/pasien', [PegawaiController::class, 'pasien']);
         Route::get('/ubahpwd', [UserController::class, 'ubahpw']);
         // Route::get('/tabelobat', [PegawaiController::class, 'tabelobat']);
         // Route::get('/tambahobat', [PegawaiController::class, 'tambahobat']);
@@ -78,20 +81,7 @@ Route::post('/tambahobat', [ObatController::class, 'store'])->name('tambahobat')
 Route::put('/tabelobat/{id}', [ObatController::class, 'update']);
 Route::delete('/tabelobat/{id}', [ObatController::class, 'destroy']);
 
-// Create, Update, Delete tabel keluhan
-Route::post('/tambahkeluhan', [KeluhanController::class, 'store'])->name('tambahkeluhan');
-Route::put('/tabelkeluhan/{id}', [KeluhanController::class, 'update']);
-Route::delete('/tabelkeluhan/{id}', [KeluhanController::class, 'destroy']);
-
-// Create, Update, Delete tabel kategori
-Route::post('/tambahkategori', [CategoryController::class, 'store'])->name('tambahkategori');
-Route::put('/tabelkategori/{id}', [CategoryController::class, 'update']);
-Route::delete('/tabelkategori/{id}', [CategoryController::class, 'destroy']);
-
 // Update User
 Route::put('/profil/{id}', [UserController::class, 'update']);
 // Update Password User
 Route::put('/ubahpw', [UserController::class, 'updatepw']);
-// Kirim Resep
-Route::post('/kirimresep', [ResepController::class, 'store']);
-

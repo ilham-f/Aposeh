@@ -16,6 +16,7 @@ return new class extends Migration
         Schema::create('detail__obats', function (Blueprint $table) {
             $table->id();
             $table->foreignId('obat_id')->constrained('obats')->onDelete('cascade');
+            $table->foreignId('member_id')->constrained('members')->onDelete('cascade');
             $table->foreignId('pembelian_id')->constrained('pembelians')->onDelete('cascade');
             $table->integer('jml_obat')->nullable();
             $table->integer('subtotal')->nullable();
