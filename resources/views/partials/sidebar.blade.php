@@ -89,7 +89,7 @@ class="z-20 hidden w-64 overflow-y-auto bg-white dark:bg-gray-800 md:block flex-
           <li
             class="px-2 py-1 transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200"
           >
-            <a class="w-full" href="pages/login.html">Riwayat</a>
+            <a class="w-full" href="/histori">Riwayat</a>
           </li>
         </ul>
       </template>
@@ -340,7 +340,8 @@ class="z-20 hidden w-64 overflow-y-auto bg-white dark:bg-gray-800 md:block flex-
               </li>
             </ul>
           </template>
-        
+
+
           <template x-if="isRekapMenuOpen">
             <ul
               x-transition:enter="transition-all ease-in-out duration-300"

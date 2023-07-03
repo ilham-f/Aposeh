@@ -28,6 +28,11 @@ class PegawaiController extends Controller
             'title' => 'Dashboard'
         ]);
     }
+    public function historyChat(){
+        return view('manajemen.historyChat',[
+            'title' => 'Dashboard'
+        ]);
+    }
 
     public function member(){
         return view('pegawai.member',[

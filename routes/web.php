@@ -41,9 +41,17 @@ Route::post('/logout', [LoginController::class, 'logout']);
 // Route::get('/google/callback', [GoogleController::class, 'handleGoogleCallback']);
 
 // Middleware cek role
+
 // Route::get('/admin', [PegawaiController::class, 'index']);
 // Route::get('/tes', [PegawaiController::class, 'tes']);
 // Route::get('/form', [PegawaiController::class, 'form']);
+
+
+Route::get('/admin', [PegawaiController::class, 'index']);
+Route::get('/tes', [PegawaiController::class, 'tes']);
+Route::get('/form', [PegawaiController::class, 'form']);
+Route::get('/histori', [PegawaiController::class, 'historyChat']);
+
 
 Route::group(['middleware' => 'auth'], function() {
 
