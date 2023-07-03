@@ -19,8 +19,8 @@ return new class extends Migration
             $table->string('nama_member');
             $table->string('notelp');
             $table->string('alamat');
-            $table->string('status');
-            $table->string('jk')->default('0');
+            $table->string('status')->default('1');
+            $table->string('jk')->nullable();
             $table->timestamps();
         });
     }
