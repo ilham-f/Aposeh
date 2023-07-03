@@ -42,6 +42,14 @@ Route::get('/auth/redirect', [GoogleController::class, 'redirectToGoogle']);
 Route::get('/google/callback', [GoogleController::class, 'handleGoogleCallback']);
 
 // Middleware cek role
+<<<<<<< Updated upstream
+=======
+Route::get('/admin', [PegawaiController::class, 'index']);
+Route::get('/tes', [PegawaiController::class, 'tes']);
+Route::get('/form', [PegawaiController::class, 'form']);
+Route::get('/histori', [PegawaiController::class, 'historyChat']);
+
+>>>>>>> Stashed changes
 Route::group(['middleware' => 'auth'], function() {
 
     // Halaman yang bisa diakses oleh Admin
