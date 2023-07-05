@@ -8,7 +8,7 @@ use App\Http\Requests\UpdatePegawaiRequest;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Member;
 use Carbon\Carbon;
-use DB;
+use Illuminate\Support\Facades\DB;
 
 class PegawaiController extends Controller
 {
