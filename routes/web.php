@@ -60,6 +60,7 @@ Route::group(['middleware' => 'auth'], function() {
         Route::get('/manajemen', [PegawaiController::class, 'manajemen']);
         Route::get('/pasien', [PegawaiController::class, 'pasien']);
         Route::get('/ubahpwd', [UserController::class, 'ubahpw']);
+        Route::get('/rekaptransaksi', [PegawaiController::class, 'rekap']);
         // Route::get('/tabelobat', [PegawaiController::class, 'tabelobat']);
         // Route::get('/tambahobat', [PegawaiController::class, 'tambahobat']);
         // Route::get('/tabelkategori', [PegawaiController::class, 'tabelkategori']);
