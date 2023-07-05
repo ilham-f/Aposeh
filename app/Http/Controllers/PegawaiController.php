@@ -50,6 +50,12 @@ class PegawaiController extends Controller
         ]);
     }
 
+    public function rekap(){
+        return view('manajemen.rekaptransaksi',[
+            'title' => ''
+        ]);
+    }
+
     public function charts(){
         $jumlahPasien = Member::select(DB::raw('COUNT(*) as jumlahPasien'))
                                 ->groupBy(DB::raw('MONTH(created_at)'))
