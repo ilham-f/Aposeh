@@ -223,7 +223,7 @@
     {{-- Tahun chart --}}
     <div class="min-w-0 p-4 bg-white rounded-lg shadow-xs dark:bg-gray-800">
         <h4 class="mb-4 font-semibold text-gray-800 dark:text-gray-300" style="text-align: center">
-            Jumlah Pasien 
+            Jumlah Pasien
         </h4>
         <div>
             <label for="year">Pilih Tahun:</label>
@@ -635,6 +635,32 @@
     </div>
     </div>
 
+    <script src="https://code.highcharts.com/highcharts.js"></script>
+    <script type="text/javascript">
+
+    Highcharts.chart('grafik', {
+        title : {
+            text: 'Grafik Pasien setiap Bulan'
+        },
+        xAxis : {
+            categories : bulan
+        },
+        yAxis : {
+            title : {
+                text : 'Jumlah pasien Bulanan'
+            }
+        },
+        plotOptions: {
+            series: {
+                allowPointSelect:true
+            }
+        },
+        series: [
+            {
+                name: 'Jumlah Pasien',
+                data: pasien
+            }
+        ]
 
 
 @endsection

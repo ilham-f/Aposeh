@@ -94,6 +94,12 @@ class PegawaiController extends Controller
         ]);
     }
 
+    public function history(){
+        return view('manajemen.history',[
+            'title' => ''
+        ]);
+    }
+
     public function charts(){
         $jumlahPasien = Member::select(DB::raw('COUNT(*) as jumlahPasien'))
                                 ->groupBy(DB::raw('MONTH(created_at)'))
