@@ -6,10 +6,10 @@ use App\Models\Pegawai;
 use App\Http\Requests\StorePegawaiRequest;
 use App\Http\Requests\UpdatePegawaiRequest;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Http\Request;
 use App\Models\Member;
 use Carbon\Carbon;
 use DB;
-use Illuminate\Http\Request;
 
 class PegawaiController extends Controller
 {
@@ -80,7 +80,7 @@ class PegawaiController extends Controller
 
     public function member(){
         return view('pegawai.member',[
-            'title' => 'Dashboard'
+            'users' => Member::all()
         ]);
     }
 
