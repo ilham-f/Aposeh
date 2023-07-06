@@ -2,9 +2,16 @@
 
 namespace App\Http\Controllers;
 
+<<<<<<< Updated upstream:app/Http/Controllers/ProgramController.php
 use App\Models\Program;
 use App\Http\Requests\StoreProgramRequest;
 use App\Http\Requests\UpdateProgramRequest;
+=======
+use App\Models\TemplateChat;
+use App\Http\Requests\StoreTemplateChatRequest;
+use App\Http\Requests\UpdateTemplateChatRequest;
+use Illuminate\Http\Request;
+>>>>>>> Stashed changes:app/Http/Controllers/TemplateChatController.php
 
 class ProgramController extends Controller
 {
@@ -15,7 +22,8 @@ class ProgramController extends Controller
      */
     public function index()
     {
-        //
+        $data = TemplateChat::get();
+        return view('pegawai.templatepesan',['datablade' => $data]);
     }
 
     /**
@@ -23,9 +31,13 @@ class ProgramController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Request $request)
     {
-        //
+        $data = $request->validate([
+            'chat'=> 'required|string',
+        ]);
+        TemplateChat::create($data); 
+        return back();
     }
 
     /**
@@ -56,9 +68,20 @@ class ProgramController extends Controller
      * @param  \App\Models\Program  $program
      * @return \Illuminate\Http\Response
      */
+<<<<<<< Updated upstream:app/Http/Controllers/ProgramController.php
     public function edit(Program $program)
+=======
+    public function edit($id)
+>>>>>>> Stashed changes:app/Http/Controllers/TemplateChatController.php
     {
-        //
+        $data = TemplateChat::where('id', $id)->first();
+        return view('pegawai.edittemplate')->with('data', $data);
+        // $data = $request->validate([
+        //     'chat'=> 'required|string',
+        //     'id'=>'required'
+        // ]);
+        // TemplateChat::findorfail($request['id']); 
+        // return back();
     }
 
     /**
@@ -68,9 +91,18 @@ class ProgramController extends Controller
      * @param  \App\Models\Program  $program
      * @return \Illuminate\Http\Response
      */
+<<<<<<< Updated upstream:app/Http/Controllers/ProgramController.php
     public function update(UpdateProgramRequest $request, Program $program)
+=======
+    public function update(Request $request, $id)
+>>>>>>> Stashed changes:app/Http/Controllers/TemplateChatController.php
     {
-        //
+        $data = [
+            'chat'=>$request->chat
+        ];
+
+        TemplateChat::where('id', $id)->update($data);
+        return redirect()->to('templatepesan')->with('succes', 'Berhasil melakukan update data');
     }
 
     /**
@@ -79,8 +111,13 @@ class ProgramController extends Controller
      * @param  \App\Models\Program  $program
      * @return \Illuminate\Http\Response
      */
+<<<<<<< Updated upstream:app/Http/Controllers/ProgramController.php
     public function destroy(Program $program)
+=======
+    public function destroy($id)
+>>>>>>> Stashed changes:app/Http/Controllers/TemplateChatController.php
     {
-        //
+        TemplateChat::findorfail($id)->delete(); 
+        return back();
     }
 }
