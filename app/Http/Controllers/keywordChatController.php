@@ -17,7 +17,7 @@ class keywordChatController extends Controller
     {
         $data = TemplateReply::all();
 
-        return view('manajemen.history',[
+        return view('manajemen.repliesChat',[
             'data' => $data,
         ]);
     }
@@ -81,7 +81,7 @@ class keywordChatController extends Controller
         ];
 
         TemplateReply::where('id', $id)->update($data);
-        return redirect()->to('history')->with('succes', 'Berhasil melakukan update data');
+        return redirect()->to('Auto-ReplyChat')->with('succes', 'Berhasil melakukan update data');
     }
 
     /**

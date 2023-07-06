@@ -50,8 +50,8 @@ class PegawaiController extends Controller
         ]);
     }
 
-    public function history(){
-        return view('manajemen.history',[
+    public function repliesChat(){
+        return view('manajemen.repliesChat',[
             'title' => ''
         ]);
     }

@@ -44,7 +44,7 @@ class TemplateReplyController extends Controller
         ];
 
         TemplateReply::create($data);
-        return redirect('/history');
+        return redirect('/Auto-ReplyChat');
     }
 
     /**
