@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\Member;
 use Carbon\Carbon;
 use DB;
+use Illuminate\Http\Request;
 
 class PegawaiController extends Controller
 {
@@ -17,11 +18,58 @@ class PegawaiController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function manajemen(){
-        return view('manajemen.manajemen',[
-            'title' => 'Dashboard'
-        ]);
+    public function manajemen(Request $request)
+{
+    // Mendapatkan tahun yang dipilih dari request
+    $selectedYear = $request->input('year', null);
+
+    // Mengambil data jumlah pasien setiap user setiap bulan
+    $data = Member::select(DB::raw('COUNT(*) as total, YEAR(members.created_at) as year, DATE_FORMAT(members.created_at, "%Y-%m") as month, users.nama'))
+        ->join('users', 'members.user_id', '=', 'users.id')
+        ->when($selectedYear, function ($query, $selectedYear) {
+            return $query->whereYear('members.created_at', $selectedYear);
+        })
+        ->groupBy('members.user_id', 'year', 'month', 'users.nama')
+        ->orderBy('year', 'asc')
+        ->orderBy('month', 'asc')
+        ->get();
+
+    // Membentuk data untuk chart
+    $chartData = [];
+    $usernames = [];
+    $years = [];
+
+    foreach ($data as $row) {
+        $chartData[$row->nama][$row->year][] = $row->total;
+        if (!in_array($row->nama, $usernames)) {
+            $usernames[] = $row->nama;
+        }
+        if (!in_array($row->year, $years)) {
+            $years[] = $row->year;
+        }
     }
+<<<<<<< Updated upstream
+=======
+
+    // Mengambil label bulan dari data yang tersedia
+    $labels = Member::select(DB::raw('DISTINCT DATE_FORMAT(members.created_at, "%Y-%m") as month'))
+        ->when($selectedYear, function ($query, $selectedYear) {
+            return $query->whereYear('members.created_at', $selectedYear);
+        })
+        ->orderBy('month')
+        ->pluck('month')
+        ->toArray();
+
+    // Ubah format label bulan menjadi nama bulan
+    $labels = array_map(function ($label) {
+        $date = Carbon::createFromFormat('Y-m', $label);
+        return $date->format('F');
+    }, $labels);
+
+    return view('manajemen.manajemen', compact('chartData', 'labels', 'usernames', 'years'));
+}
+
+>>>>>>> Stashed changes
     public function pegawai(){
         return view('pegawai.pegawai',[
             'title' => 'Dashboard'
