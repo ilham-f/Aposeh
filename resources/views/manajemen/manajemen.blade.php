@@ -486,8 +486,7 @@
 
     <script src="https://code.highcharts.com/highcharts.js"></script>
     <script type="text/javascript">
-    var pasien = <?php echo json_encode($jumlahPasien) ?>;
-    var bulan = <?php echo json_encode($bulan) ?>;
+
     Highcharts.chart('grafik', {
         title : {
             text: 'Grafik Pasien setiap Bulan'

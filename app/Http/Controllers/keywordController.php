@@ -2,13 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\TemplateReply;
+use App\Modals\TemplateReplay;
+use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
-use App\Http\Requests\StoreTemplateReplyRequest;
-use App\Http\Requests\UpdateTemplateReplyRequest;
-
-class TemplateReplyController extends Controller
+class keywordController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -33,27 +31,28 @@ class TemplateReplyController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \App\Http\Requests\StoreTemplateReplyRequest  $request
+     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
     {
         $data =[
-            'reply_chat' => $request->reply_chat,
+            'replay_chat' => $request->replay_chat,
             'keyword' => $request->keyword,
         ];
 
         TemplateReply::create($data);
         return redirect('/history');
+
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\TemplateReply  $templateReply
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(TemplateReply $templateReply)
+    public function show($id)
     {
         //
     }
@@ -61,33 +60,40 @@ class TemplateReplyController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\TemplateReply  $templateReply
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(TemplateReply $templateReply)
+    public function edit($id)
     {
-        //
+        $data = TemplateReply::where('id', $data)->first();
+        return view('manajemen.edit-keyword');
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \App\Http\Requests\UpdateTemplateReplyRequest  $request
-     * @param  \App\Models\TemplateReply  $templateReply
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateTemplateReplyRequest $request, TemplateReply $templateReply)
+    public function update(Request $request, $id)
     {
-        //
+        $data =[
+            'reply_chat' => $request->reply_chat,
+            'keyword' => $request->keyword,
+        ];
+
+        TemplateReply::where('id', $id)->update($data);
+        return redirect()->to('manajemen.history')->with('succes', 'Berhasil melakukan update data');
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\TemplateReply  $templateReply
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(TemplateReply $templateReply)
+    public function destroy($id)
     {
         //
     }

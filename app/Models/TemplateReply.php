@@ -8,4 +8,6 @@ use Illuminate\Database\Eloquent\Model;
 class TemplateReply extends Model
 {
     use HasFactory;
+
+    protected $guarded = ['id'];
 }

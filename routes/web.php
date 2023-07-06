@@ -7,6 +7,9 @@ use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\PegawaiController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\ObatController;
+use App\Http\Controllers\TemplateReplyController;
+use App\Http\Controllers\keywordChatController;
+use App\Http\Controllers\keywordController;
 
 /*
 |--------------------------------------------------------------------------
@@ -60,6 +63,10 @@ Route::group(['middleware' => 'auth'], function() {
         Route::get('/manajemen', [PegawaiController::class, 'manajemen']);
         Route::get('/pasien', [PegawaiController::class, 'pasien']);
         Route::get('/ubahpwd', [UserController::class, 'ubahpw']);
+        // Route::get('/history', [PegawaiController::class, 'history']);
+    Route::resource('/history', keywordChatController::class);
+        Route::get('/createKeyword', [TemplateReplyController::class, 'create']);
+        Route::post('/storeKeyword', [TemplateReplyController::class, 'store']);
         // Route::get('/tabelobat', [PegawaiController::class, 'tabelobat']);
         // Route::get('/tambahobat', [PegawaiController::class, 'tambahobat']);
         // Route::get('/tabelkategori', [PegawaiController::class, 'tabelkategori']);
