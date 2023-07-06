@@ -3,8 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Models\Chat;
+use App\Models\TemplateChat;
 use App\Http\Requests\StoreChatRequest;
 use App\Http\Requests\UpdateChatRequest;
+use App\Http\Requests\StoreTemplateChatRequest;
+use App\Http\Requests\UpdateTemplateChatRequest;
+use Illuminate\Http\Request;
 
 class ChatController extends Controller
 {
@@ -15,7 +19,8 @@ class ChatController extends Controller
      */
     public function index()
     {
-        //
+        $data = TemplateChat::get();
+        return view('pegawai.templatepesan',['datablade' => $data]);
     }
 
     /**
@@ -23,9 +28,13 @@ class ChatController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Request $request)
     {
-        //
+        $data = $request->validate([
+            'chat'=> 'required|string',
+        ]);
+        TemplateChat::create($data);
+        return back();
     }
 
     /**
@@ -56,31 +65,32 @@ class ChatController extends Controller
      * @param  \App\Models\Chat  $chat
      * @return \Illuminate\Http\Response
      */
-    public function edit(Chat $chat)
+
+    public function edit($id)
     {
-        //
+        $data = TemplateChat::where('id', $id)->first();
+        return view('pegawai.edittemplate')->with('data', $data);
+        // $data = $request->validate([
+        //     'chat'=> 'required|string',
+        //     'id'=>'required'
+        // ]);
+        // TemplateChat::findorfail($request['id']);
+        // return back();
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \App\Http\Requests\UpdateChatRequest  $request
-     * @param  \App\Models\Chat  $chat
-     * @return \Illuminate\Http\Response
-     */
-    public function update(UpdateChatRequest $request, Chat $chat)
+    public function update(Request $request, $id)
     {
-        //
+        $data = [
+            'chat'=>$request->chat
+        ];
+
+        TemplateChat::where('id', $id)->update($data);
+        return redirect()->to('templatepesan')->with('succes', 'Berhasil melakukan update data');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\Chat  $chat
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Chat $chat)
+    public function destroy($id)
     {
-        //
+        TemplateChat::findorfail($id)->delete();
+        return back();
     }
 }
