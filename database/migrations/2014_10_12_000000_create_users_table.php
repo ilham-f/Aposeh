@@ -22,6 +22,7 @@ class CreateUsersTable extends Migration
             $table->string('nama')->nullable();
             $table->string('alamat')->nullable();
             $table->string('notelp')->unique();
+            $table->string('status')->default('1');
             $table->rememberToken();
             $table->timestamps();
         });

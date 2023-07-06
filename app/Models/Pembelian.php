@@ -9,6 +9,8 @@ class Pembelian extends Model
 {
     use HasFactory;
 
+    protected $guarded = ['id'];
+
     public function obats()
     {
         return $this->belongsToMany(Obat::class, 'detail__obats')->withPivot('jml_obat','subtotal','dosis_hari','dosis_obat','estimasi_habis');

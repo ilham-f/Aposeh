@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('nama_obat');
             $table->integer('stok');
             $table->integer('harga');
+            $table->string('status')->default('1');
             $table->timestamps();
         });
     }

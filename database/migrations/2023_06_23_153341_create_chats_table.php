@@ -16,8 +16,9 @@ return new class extends Migration
         Schema::create('chats', function (Blueprint $table) {
             $table->id();
             $table->string('pengirim');
-            $table->string('penerima');
+            $table->string('no_pengirim');
             $table->text('isi');
+            $table->string('status')->default('1');
             $table->timestamps();
         });
     }
