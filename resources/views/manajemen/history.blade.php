@@ -44,7 +44,7 @@
             </svg></a>
     </td>
     <td class="px-4 py-3 text-xs">
-        <a href="{{ url('history/'.$item->id.'/edit') }}" class="btn btn-icon btn-warning btn-hover-scale me-5"
+        <a href="{{ url('Auto-ReplyChat/'.$item->id.'/edit') }}" class="btn btn-icon btn-warning btn-hover-scale me-5"
             data-bs-toggle="modal" data-bs-target="#modalUbah{{ $item->id }}"><svg
                 xmlns="http://www.w3.org/2000/svg" width="16" height="16"
                 fill="currentColor" class="bi bi-pencil" viewBox="0 0 16 16">

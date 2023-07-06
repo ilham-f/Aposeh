@@ -41,7 +41,7 @@
 
 
             <div class="px-4 py-3 mb-8 bg-white rounded-lg shadow-md dark:bg-gray-800">
-            <form action="{{url('history/'.$data->id) }}" method="POST" >
+            <form action="{{url('Auto-ReplyChat/'.$data->id) }}" method="POST" >
                 @method('put')
                 @csrf
 
