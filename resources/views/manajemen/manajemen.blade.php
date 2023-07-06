@@ -143,24 +143,175 @@
 </div> --}}
     </div>
 
-    <!-- Bars chart -->
-    <div class="min-w-0 p-4 bg-white rounded-lg shadow-xs dark:bg-gray-800">
-        <h4 class="mb-4 font-semibold text-gray-800 dark:text-gray-300">
+    <!-- Bulan chart -->
+    {{-- <div class="min-w-0 p-4 bg-white rounded-lg shadow-xs dark:bg-gray-800">
+        <h4 class="mb-4 font-semibold text-gray-800 dark:text-gray-300" style="text-align: center">
             Jumlah Pasien
         </h4>
-        <canvas id="bars"></canvas>
-        <div class="flex justify-center mt-4 space-x-3 text-sm text-gray-600 dark:text-gray-400 mt-5">
-            <!-- Chart legend -->
-            <div class="flex items-center">
-                <span class="inline-block w-3 h-3 mr-1 bg-teal-500 rounded-full"></span>
-                <span>Shoes</span>
-            </div>
-            <div class="flex items-center">
-                <span class="inline-block w-3 h-3 mr-1 bg-purple-600 rounded-full"></span>
-                <span>Bags</span>
+        <div>
+            <label for="year">Pilih Tahun:</label>
+            <select name="year" id="year">
+                @foreach ($years as $year)
+                    <option value="{{ $year }}">{{ $year }}</option>
+                @endforeach
+            </select>
+        </div>
+        <div style="position: relative; height: 400px; width: 800px;">
+            <canvas id="chart"></canvas>
+            <div id="legend" style="position: absolute; left: -80px; top: 0;">
             </div>
         </div>
     </div>
+
+    <script>
+        var chartData = @json($chartData);
+        var usernames = @json($usernames);
+        var labels = @json($labels);
+        var years = @json($years);
+
+        function updateChart(selectedYear) {
+            var ctx = document.getElementById('chart').getContext('2d');
+            var datasets = [];
+            usernames.forEach(function (username, index) {
+                var data = chartData[username][selectedYear] ? chartData[username][selectedYear] : [];
+                var dataset = {
+                    label: username,
+                    data: data,
+                    backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                    borderColor: 'rgba(75, 192, 192, 1)',
+                    borderWidth: 1
+                };
+                datasets.push(dataset);
+            });
+
+            new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: labels,
+                    datasets: datasets
+                },
+                options: {
+                    scales: {
+                        x: {
+                            stacked: true
+                        },
+                        y: {
+                            beginAtZero: true,
+                            precision: 0
+                        }
+                    },
+                    plugins: {
+                        legend: {
+                            display: false
+                        }
+                    }
+                }
+            });
+        }
+
+        var yearSelect = document.getElementById('year');
+        yearSelect.addEventListener('change', function () {
+            var selectedYear = yearSelect.value;
+            updateChart(selectedYear);
+        });
+
+        // Set default chart based on initial selected year
+        var initialYear = yearSelect.value;
+        updateChart(initialYear);
+    </script> --}}
+
+    {{-- Tahun chart --}}
+    <div class="min-w-0 p-4 bg-white rounded-lg shadow-xs dark:bg-gray-800">
+        <h4 class="mb-4 font-semibold text-gray-800 dark:text-gray-300" style="text-align: center">
+            Jumlah Pasien 
+        </h4>
+        <div>
+            <label for="year">Pilih Tahun:</label>
+            <select name="year" id="year">
+                @foreach ($years as $year)
+                    <option value="{{ $year }}">{{ $year }}</option>
+                @endforeach
+            </select>
+        </div>
+        <div style="position: relative; height: 400px; width: 800px;">
+            <canvas id="chart1" style="margin-left: 50px"></canvas>
+            <div id="legend" style="position: absolute; left: -80px; top: 0;"></div>
+            <div id="total" style="position: absolute; right: 10px; top: 10px;"></div>
+        </div>
+    </div>
+
+    <script>
+        var chartData = @json($chartData);
+        var usernames = @json($usernames);
+        var labels = @json($labels);
+
+        function updateChart(selectedYear) {
+            var ctx = document.getElementById('chart1').getContext('2d');
+            var datasets = [];
+            var total = 0;
+            usernames.forEach(function (username, index) {
+                var data = chartData[username][selectedYear] ? chartData[username][selectedYear] : [];
+                var dataset = {
+                    label: username,
+                    data: data,
+                    backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                    borderColor: 'rgba(75, 192, 192, 1)',
+                    borderWidth: 1
+                };
+                datasets.push(dataset);
+                total += data.reduce((a, b) => a + b, 0);
+            });
+
+            // Sort datasets by year in descending order
+            datasets.sort(function (a, b) {
+                var yearA = parseInt(a.label);
+                var yearB = parseInt(b.label);
+                return yearB - yearA;
+            });
+
+            // Reverse the sorted datasets to display in descending order
+            datasets.reverse();
+
+            new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: labels,
+                    datasets: datasets
+                },
+                options: {
+                    scales: {
+                        x: {
+                            stacked: true
+                        },
+                        y: {
+                            beginAtZero: true,
+                            precision: 0
+                        }
+                    },
+                    plugins: {
+                        legend: {
+                            display: false
+                        }
+                    }
+                }
+            });
+
+            document.getElementById('total').innerText = 'Total: ' + total;
+        }
+
+        var yearSelect = document.getElementById('year');
+        yearSelect.addEventListener('change', function () {
+            var selectedYear = yearSelect.value;
+            updateChart(selectedYear);
+        });
+
+        // Set default chart based on initial selected year
+        var initialYear = yearSelect.value;
+        updateChart(initialYear);
+    </script>
+
+
+
 
     <!-- New Table -->
     <div iv class="w-full overflow-hidden rounded-lg shadow-xs" style="margin-top: 40px">
@@ -484,36 +635,7 @@
     </div>
     </div>
 
-    <script src="https://code.highcharts.com/highcharts.js"></script>
-    <script type="text/javascript">
-    var pasien = <?php echo json_encode($jumlahPasien) ?>;
-    var bulan = <?php echo json_encode($bulan) ?>;
-    Highcharts.chart('grafik', {
-        title : {
-            text: 'Grafik Pasien setiap Bulan'
-        },
-        xAxis : {
-            categories : bulan
-        },
-        yAxis : {
-            title : {
-                text : 'Jumlah pasien Bulanan'
-            }
-        },
-        plotOptions: {
-            series: {
-                allowPointSelect:true
-            }
-        },
-        series: [
-            {
-                name: 'Jumlah Pasien',
-                data: pasien
-            }
-        ]
 
-    });
-    </script>
 
 @endsection
 
