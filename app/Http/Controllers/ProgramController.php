@@ -2,32 +2,42 @@
 
 namespace App\Http\Controllers;
 
+<<<<<<< Updated upstream:app/Http/Controllers/ProgramController.php
 use App\Models\Program;
 use App\Http\Requests\StoreProgramRequest;
 use App\Http\Requests\UpdateProgramRequest;
+=======
+use App\Models\Obat;
+use Illuminate\Http\Request;
+use App\Http\Requests\StoreObatRequest;
+use App\Http\Requests\UpdateObatRequest;
+>>>>>>> Stashed changes:app/Http/Controllers/ObatController.php
 
 class ProgramController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
-    {
-        //
+    //menampilkan data dinphpmyadmin/database ke halaman obat(index utama)
+    public function obat(){
+        $obat = Obat::all();
+        return view('manajemen.obat',compact(['obat']));
+        // return view('manajemen.obat', [
+        //     "obat" => $obat
+        // ]);
+    }
+    public function print(){
+        $obat = Obat::all();
+        return view('manajemen.cetak',compact(['obat']));
+        // return view('manajemen.obat', [
+        //     "obat" => $obat
+        // ]);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
+    //meanmpilkan riwayat arsip data
+    public function arc(){
+        $obat = Obat::all();
+        return view('manajemen.riwayat',compact(['obat']));
     }
 
+<<<<<<< Updated upstream:app/Http/Controllers/ProgramController.php
     /**
      * Store a newly created resource in storage.
      *
@@ -83,4 +93,30 @@ class ProgramController extends Controller
     {
         //
     }
+=======
+
+    //membat
+    public function create(){
+        return view('manajemen.create');
+    }
+
+    public function store(Request $request){
+        // dd($request->except(['_token','submit']));
+        Obat::create($request->except(['_token','submit']));
+        return back();
+    }
+
+    public function edit($id){
+        $obat = Obat::find($id);
+        return view('manajemen.edit',compact(['obat']));
+
+    }
+
+    public function update($id,Request $request){
+        $obat = Obat::find($id);
+        $obat->update($request->except(['_token','submit']));
+        return back();
+    }
+
+>>>>>>> Stashed changes:app/Http/Controllers/ObatController.php
 }
