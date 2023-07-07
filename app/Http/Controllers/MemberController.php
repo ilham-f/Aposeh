@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Member;
 use App\Http\Requests\StoreMemberRequest;
 use App\Http\Requests\UpdateMemberRequest;
+use Illuminate\Http\Request;
 
 class MemberController extends Controller
 {
@@ -15,7 +16,7 @@ class MemberController extends Controller
      */
     public function index()
     {
-        //
+        return view('manajemen.indexmember');
     }
 
     /**
@@ -25,18 +26,29 @@ class MemberController extends Controller
      */
     public function create()
     {
-        //
+        return view('manajemen.createmember',[
+            'pegawai' => User::where("role","pegawai")->get()
+        ]);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \App\Http\Requests\StoreMemberRequest  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(StoreMemberRequest $request)
+    public function store(Request $request)
     {
-        //
+        // dd($request);
+        $validator = $request->validate([
+
+            'user_id' => 'required',
+            'nama_member' => 'required',
+            'notelp' => 'required|max:14',
+            'alamat' => 'required',
+            'keluhan' => 'required',
+            'jk' => 'required',
+        ]);
+
+        $member = Member::create($validator);
+         if ($member) {
+             return redirect('/indexdatamember');
+         }
+
     }
 
     /**
@@ -83,4 +95,6 @@ class MemberController extends Controller
     {
         //
     }
+
+
 }

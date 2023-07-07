@@ -17,6 +17,9 @@ return new class extends Migration
             $table->id();
             $table->foreignId('member_id')->constrained('members')->onDelete('cascade');
             $table->integer('total_harga');
+            $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
+            $table->foreignId('program_id')->constrained('programs')->onDelete('cascade');
+            $table->integer('jmlbayar')->nullable();
             $table->timestamps();
         });
     }

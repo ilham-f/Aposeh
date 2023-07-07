@@ -10,6 +10,7 @@ use App\Http\Controllers\ObatController;
 use App\Http\Controllers\TemplateReplyController;
 use App\Http\Controllers\keywordChatController;
 use App\Http\Controllers\keywordController;
+use App\Http\Controllers\MemberController;
 
 /*
 |--------------------------------------------------------------------------
@@ -53,7 +54,7 @@ Route::post('/logout', [LoginController::class, 'logout']);
 Route::get('/admin', [PegawaiController::class, 'index']);
 Route::get('/tes', [PegawaiController::class, 'tes']);
 Route::get('/form', [PegawaiController::class, 'form']);
-Route::get('/histori', [PegawaiController::class, 'historyChat']);
+// Route::get('/histori', [PegawaiController::class, 'historyChat']);
 
 
 Route::group(['middleware' => 'auth'], function() {
@@ -63,16 +64,15 @@ Route::group(['middleware' => 'auth'], function() {
         Route::get('/manajemen', [PegawaiController::class, 'manajemen']);
         Route::get('/pasien', [PegawaiController::class, 'pasien']);
         Route::get('/ubahpwd', [UserController::class, 'ubahpw']);
-        // Route::get('/history', [PegawaiController::class, 'history']);
-    Route::resource('/Auto-ReplyChat', keywordChatController::class);
+        Route::get('/history', [PegawaiController::class, 'history']);
+        Route::resource('/Auto-ReplyChat', keywordChatController::class);
         Route::get('/createKeyword', [TemplateReplyController::class, 'create']);
         Route::post('/storeKeyword', [TemplateReplyController::class, 'store']);
-        // Route::get('/tabelobat', [PegawaiController::class, 'tabelobat']);
-        // Route::get('/tambahobat', [PegawaiController::class, 'tambahobat']);
-        // Route::get('/tabelkategori', [PegawaiController::class, 'tabelkategori']);
-        // Route::get('/tambahkategori', [PegawaiController::class, 'tambahkategori']);
-        // Route::get('/tabelkeluhan', [PegawaiController::class, 'tabelkeluhan']);
-        // Route::get('/tambahkeluhan', [PegawaiController::class, 'tambahkeluhan']);
+        Route::get('/datapegawai', [PegawaiController::class, 'tambahdatapegawai']);
+        Route::get('/ubahpwd', [UserController::class, 'ubahpw']);
+        Route::get('/indexdatamember', [MemberController::class, 'index']);
+        Route::get('/createmember', [MemberController::class, 'create']);
+        Route::post('/creatememberpost', [MemberController::class, 'store']);
     });
 
     Route::group(['middleware' => 'cekrole:pegawai'], function() {
@@ -81,12 +81,6 @@ Route::group(['middleware' => 'auth'], function() {
         Route::get('/ubahpwd', [UserController::class, 'ubahpw']);
         Route::get('/charts', [PegawaiController::class, 'charts']);
         Route::get('/ubahpwd', [UserController::class, 'ubahpw']);
-        // Route::get('/tabelobat', [PegawaiController::class, 'tabelobat']);
-        // Route::get('/tambahobat', [PegawaiController::class, 'tambahobat']);
-        // Route::get('/tabelkategori', [PegawaiController::class, 'tabelkategori']);
-        // Route::get('/tambahkategori', [PegawaiController::class, 'tambahkategori']);
-        // Route::get('/tabelkeluhan', [PegawaiController::class, 'tabelkeluhan']);
-        // Route::get('/tambahkeluhan', [PegawaiController::class, 'tambahkeluhan']);
     });
 
 });

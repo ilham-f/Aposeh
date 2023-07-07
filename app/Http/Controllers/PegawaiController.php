@@ -6,7 +6,6 @@ use App\Models\Pegawai;
 use App\Http\Requests\StorePegawaiRequest;
 use App\Http\Requests\UpdatePegawaiRequest;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Http\Request;
 use App\Models\Member;
 use Carbon\Carbon;
 use DB;
@@ -72,6 +71,12 @@ class PegawaiController extends Controller
             'title' => 'Dashboard'
         ]);
     }
+
+    public function tambahdatapegawai(){
+        return view('manajemen.datapegawai');
+    }
+
+
     public function historyChat(){
         return view('manajemen.historyChat',[
             'title' => 'Dashboard'
