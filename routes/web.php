@@ -30,11 +30,22 @@ use App\Http\Controllers\MemberController;
 */
 
 // Customer tanpa login
+<<<<<<< Updated upstream
 Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('/produk', [ObatController::class, 'index']);
 Route::get('produk/{obat:slug}', [ObatController::class, 'show']);
 Route::get('/categories', [CategoryController::class, 'index']);
 Route::get('categories/{category:slug}', [CategoryController::class, 'show']);
+=======
+Route::get('/', [LoginController::class, 'index'])->name('index');
+
+// Webhook
+Route::any('/webhook', [WebhookController::class, 'index']);
+// Route::get('/produk', [ObatController::class, 'index']);
+// Route::get('produk/{obat:slug}', [ObatController::class, 'show']);
+// Route::get('/categories', [CategoryController::class, 'index']);
+// Route::get('categories/{category:slug}', [CategoryController::class, 'show']);
+>>>>>>> Stashed changes
 
 // User Regis
 Route::post('/regis', [RegisterController::class, 'store']);
@@ -48,10 +59,28 @@ Route::get('/auth/redirect', [GoogleController::class, 'redirectToGoogle']);
 Route::get('/google/callback', [GoogleController::class, 'handleGoogleCallback']);
 
 // Middleware cek role
+<<<<<<< Updated upstream
 Route::group(['middleware' => 'auth'], function() {
 
     // Halaman yang bisa diakses oleh Admin
 <<<<<<< Updated upstream
+=======
+
+// Route::get('/admin', [PegawaiController::class, 'index']);
+// Route::get('/tes', [PegawaiController::class, 'tes']);
+// Route::get('/form', [PegawaiController::class, 'form']);
+
+
+Route::get('/admin', [PegawaiController::class, 'index']);
+Route::get('/tes', [PegawaiController::class, 'tes']);
+Route::get('/form', [PegawaiController::class, 'form']);
+// Route::get('/histori', [PegawaiController::class, 'historyChat']);
+
+
+// Halaman yang bisa diakses oleh Admin
+Route::group(['middleware' => 'auth'], function() {
+
+>>>>>>> Stashed changes
     Route::group(['middleware' => 'cekrole:admin'], function() {
         Route::get('/admin', [AdminController::class, 'index']);
         Route::get('/tabelobat', [AdminController::class, 'tabelobat']);
@@ -60,16 +89,31 @@ Route::group(['middleware' => 'auth'], function() {
         Route::get('/tambahkategori', [AdminController::class, 'tambahkategori']);
         Route::get('/tabelkeluhan', [AdminController::class, 'tabelkeluhan']);
         Route::get('/tambahkeluhan', [AdminController::class, 'tambahkeluhan']);
+<<<<<<< Updated upstream
 =======
+=======
+    });
+>>>>>>> Stashed changes
     Route::group(['middleware' => 'cekrole:manajemen'], function() {
         Route::get('/manajemen', [PegawaiController::class, 'manajemen']);
         Route::get('/pasien', [PegawaiController::class, 'pasien']);
         Route::get('/datapegawai', [PegawaiController::class, 'tambahdatapegawai']);
         Route::get('/ubahpwd', [UserController::class, 'ubahpw']);
+<<<<<<< Updated upstream
         
         Route::get('/indexdatamember', [MemberController::class, 'index']); 
         Route::get('/createmember', [MemberController::class, 'create']);
         Route::post('/creatememberpost', [MemberController::class, 'store']);
+=======
+
+
+        // crud member
+        Route::get('/indexdatamember', [MemberController::class, 'index']);
+        Route::get('/createmember', [MemberController::class, 'create']);
+        Route::get('/editmember/{id}', [MemberController::class, 'edit']);
+        Route::put('/editmember/{id}', [MemberController::class, 'update']);
+        // Route::post('/creatememberpost', [MemberController::class, 'store']);
+>>>>>>> Stashed changes
         
         // Route::get('/tabelobat', [PegawaiController::class, 'tabelobat']);
         // Route::get('/tambahobat', [PegawaiController::class, 'tambahobat']);
@@ -77,6 +121,9 @@ Route::group(['middleware' => 'auth'], function() {
         // Route::get('/tambahkategori', [PegawaiController::class, 'tambahkategori']);
         // Route::get('/tabelkeluhan', [PegawaiController::class, 'tabelkeluhan']);
         // Route::get('/tambahkeluhan', [PegawaiController::class, 'tambahkeluhan']);
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
+=======
 >>>>>>> Stashed changes
     });
 
@@ -115,7 +162,11 @@ Route::delete('/tabelkategori/{id}', [CategoryController::class, 'destroy']);
 // Update User
 Route::put('/profil/{id}', [UserController::class, 'update']);
 // Update Password User
+<<<<<<< Updated upstream
 Route::put('/ubahpw', [UserController::class, 'updatepw']);
 // Kirim Resep
 Route::post('/kirimresep', [ResepController::class, 'store']);
 
+=======
+Route::put('/ubahpw', [UserController::class, 'updatepw']);
+>>>>>>> Stashed changes

@@ -2,13 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use DB;
+use Carbon\Carbon;
+use App\Models\Member;
 use App\Models\Pegawai;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\StorePegawaiRequest;
 use App\Http\Requests\UpdatePegawaiRequest;
-use Illuminate\Support\Facades\Auth;
-use App\Models\Member;
-use Carbon\Carbon;
-use DB;
 
 class PegawaiController extends Controller
 {

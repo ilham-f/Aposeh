@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 
+<<<<<<< Updated upstream
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
@@ -123,3 +124,29 @@
     </script>
 </body>
 </html>
+=======
+     {{-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous"></script> --}}
+   </head>
+   <body>
+     <div class="flex h-screen bg-gray-50 dark:bg-gray-900":class="{ 'overflow-hidden': isSideMenuOpen }">
+       @include('partials.sidebar')
+       <div class="flex flex-col flex-1 w-full">
+         @include('partials.navbar')
+         <main class="h-full overflow-y-auto">
+           <div class="container px-6 mx-auto grid">
+             @yield('content')
+         </main>
+       </div>
+     </div>
+     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    {{-- <script>
+         setInterval(() => {
+          $('html').toggleClass('theme-dark','dark');
+          // $('html').toggleClass('theme-dark','light');
+
+        }, 100  );
+     </script> --}}
+   </body>
+ </html>
+>>>>>>> Stashed changes

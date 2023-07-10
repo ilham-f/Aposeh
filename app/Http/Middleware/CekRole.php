@@ -8,13 +8,7 @@ use Illuminate\Support\Facades\Auth;
 
 class CekRole
 {
-    /**
-     * Handle an incoming request.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \Closure(\Illuminate\Http\Request): (\Illuminate\Http\Response|\Illuminate\Http\RedirectResponse)  $next
-     * @return \Illuminate\Http\Response|\Illuminate\Http\RedirectResponse
-     */
+    
     public function handle(Request $request, Closure $next, ...$roles)
     {
 
@@ -25,7 +19,13 @@ class CekRole
             if($user->role == $role)
                 return $next($request);
         }
-
+        // dd($user->role);
         return redirect('/');
+        // dd($roles);
+        // if ($request->user()->role == $roles) {
+        //     return $next($request);
+        // }
+
+        // abort(403, 'Access denied. You must have ' . $roles . ' privileges.');
     }
 }
