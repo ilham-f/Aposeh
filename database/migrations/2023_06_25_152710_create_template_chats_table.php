@@ -16,6 +16,7 @@ return new class extends Migration
         Schema::create('template_chats', function (Blueprint $table) {
             $table->id();
             $table->string('chat');
+            $table->string('status')->default('1');
             $table->timestamps();
         });
     }

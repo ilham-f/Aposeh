@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Member;
+use App\Models\User;
 use App\Http\Requests\StoreMemberRequest;
 use App\Http\Requests\UpdateMemberRequest;
 use Illuminate\Http\Request;
@@ -16,7 +17,9 @@ class MemberController extends Controller
      */
     public function index()
     {
-        return view('manajemen.indexmember');
+        return view('manajemen.indexmember',[
+            'users' => Member::all()
+        ]);
     }
 
     /**
@@ -35,20 +38,17 @@ class MemberController extends Controller
     {
         // dd($request);
         $validator = $request->validate([
-
             'user_id' => 'required',
             'nama_member' => 'required',
-            'notelp' => 'required|max:14',
+            'notelp' => 'required|max:14|unique:members',
             'alamat' => 'required',
-            'keluhan' => 'required',
             'jk' => 'required',
         ]);
 
         $member = Member::create($validator);
          if ($member) {
-             return redirect('/indexdatamember');
-         }
-
+            return redirect('/indexdatamember');
+        }
     }
 
     /**

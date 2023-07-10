@@ -17,7 +17,16 @@ class PegawaiController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function manajemen(Request $request)
+
+    function manajemen(){
+        $years = [2020,2021,2022,2023];
+        $chartData = [];
+        $usernames = [];
+        $labels = [];
+        return view('manajemen.manajemen', compact('chartData', 'labels', 'usernames', 'years'));
+    }
+
+    public function grafik(Request $request)
     {
         // Mendapatkan tahun yang dipilih dari request
         $selectedYear = $request->input('year', null);

@@ -17,6 +17,7 @@ return new class extends Migration
             $table->id();
             $table->string('reply_chat');
             $table->string('keyword');
+            $table->string('status')->default('1');
             $table->timestamps();
         });
     }

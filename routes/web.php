@@ -62,6 +62,7 @@ Route::group(['middleware' => 'auth'], function() {
     // Halaman yang bisa diakses oleh Admin
     Route::group(['middleware' => 'cekrole:manajemen'], function() {
         Route::get('/manajemen', [PegawaiController::class, 'manajemen']);
+        // Route::get('/grafik', [PegawaiController::class, 'grafik']);
         Route::get('/pasien', [PegawaiController::class, 'pasien']);
         Route::get('/ubahpwd', [UserController::class, 'ubahpw']);
         Route::get('/history', [PegawaiController::class, 'history']);
