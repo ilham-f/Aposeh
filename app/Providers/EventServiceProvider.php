@@ -20,6 +20,12 @@ class EventServiceProvider extends ServiceProvider
         ],
     ];
 
+    protected $listenChat = [
+        ChatResponded::class=> [
+            hitungResponseTime::class,
+
+        ],
+    ];
     /**
      * Register any events for your application.
      *

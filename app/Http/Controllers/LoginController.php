@@ -9,21 +9,13 @@ use Illuminate\Support\Facades\Auth;
 class LoginController extends Controller
 {
     public function index(){
-        if(Auth::user()){
-            if(Auth::user()->role == 'admin'){
-                return redirect()->intended('/admin');
-            }
-            else if(Auth::user()->role == 'customer'){
-                return redirect()->intended('/');
-            }
-        }
-        return view('/');
+        return view('sign-in');
     }
 
     public function authenticate(Request $request)
     {
         $credentials = $request->validate([
-            'email' => ['required', 'email:rfc,dns'],
+            'notelp' => ['required'],
             'password' => ['required'],
         ]);
 
@@ -31,17 +23,15 @@ class LoginController extends Controller
         if (Auth::attempt($credentials)) {
             $request->session()->regenerate();
             // return redirect()->intended('/');
-<<<<<<< Updated upstream
             if(Auth::user()->role == 'admin'){
                 return redirect()->intended('/admin');
-=======
+
             // dd(Auth::user()->role);
             if(Auth::user()->role == 'manajemen'){
                 return redirect()->intended('/manajemen');
->>>>>>> Stashed changes
             }
             else{
-                return redirect()->intended('/');
+                return redirect()->intended('/pegawai');
             }
         }
 

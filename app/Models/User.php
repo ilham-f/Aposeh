@@ -21,7 +21,7 @@ class User extends Authenticatable
     protected $guarded = ['id'];
 
     protected $attributes = [
-        'role' => 'pengunjung'
+        'role' => 'pegawai'
     ];
 
     /**
@@ -43,13 +43,9 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-    public function trankasis()
+    public function members()
     {
-        return $this->hasMany(Transaksi::class);
+        return $this->hasMany(Member::class);
     }
 
-    public function programs()
-    {
-        return $this->hasMany(Program::class);
-    }
 }
