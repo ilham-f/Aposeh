@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Http\Request;
 use App\Models\Obat;
 use App\Http\Requests\StoreObatRequest;
 use App\Http\Requests\UpdateObatRequest;
@@ -15,7 +16,11 @@ class ObatController extends Controller
      */
     public function index()
     {
-        //
+        $data = obat::all();
+
+        return view('pegawai.obat',[
+            'data' => $data
+        ]);
     }
 
     /**
@@ -56,9 +61,10 @@ class ObatController extends Controller
      * @param  \App\Models\Obat  $obat
      * @return \Illuminate\Http\Response
      */
-    public function edit(Obat $obat)
+    public function edit($id)
     {
-        //
+        $data = obat::where('id', $id)->first();
+        return view('pegawai.edit-obat')->with('data', $data);
     }
 
     /**
@@ -68,9 +74,17 @@ class ObatController extends Controller
      * @param  \App\Models\Obat  $obat
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateObatRequest $request, Obat $obat)
+    public function update(Request $request, $id)
     {
-        //
+        $data = [
+            'nama_obat'=>$request->nama_obat,
+            'stok' => $request->stok,
+            'harga' => $request->harga,
+            'status' => $request->status,
+        ];
+
+        obat::where('id', $id)->update($data);
+        return redirect()->to('pegawai/obat')->with('succes', 'Berhasil melakukan update data');
     }
 
     /**
