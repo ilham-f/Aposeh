@@ -36,7 +36,7 @@ class LoginController extends Controller
         }
 
         return back()->with('alert', 'Gagal masuk ke akun Anda, silakan coba lagi!');
-    }
+    }}
 
     public function logout(Request $request)
     {
