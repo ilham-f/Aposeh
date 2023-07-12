@@ -27,7 +27,8 @@ use App\Http\Controllers\MemberController;
 Route::get('/', [LoginController::class, 'index']);
 
 // Webhook
-Route::any('/webhook', [WebhookController::class, 'index']);
+Route::match(['get', 'post'], '/webhook', [WebhookController::class, 'index']);
+// Route::any('/webhook', [WebhookController::class, 'index']);
 // Route::get('/produk', [ObatController::class, 'index']);
 // Route::get('produk/{obat:slug}', [ObatController::class, 'show']);
 // Route::get('/categories', [CategoryController::class, 'index']);

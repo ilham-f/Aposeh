@@ -86,11 +86,6 @@ class WebhookController extends Controller
             ];
         }
 
-        sendFonnte($sender, $reply);
-
-    }
-
-    function sendFonnte($target, $data) {
         $curl = curl_init();
 
         curl_setopt_array($curl, array(
@@ -103,13 +98,13 @@ class WebhookController extends Controller
           CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
           CURLOPT_CUSTOMREQUEST => "POST",
           CURLOPT_POSTFIELDS => array(
-                'target' => $target,
-                'message' => $data['message'],
-                'url' => $data['url'],
-                'filename' => $data['filename'],
+                'target' => $sender,
+                'message' => $reply['message'],
+                'url' => $reply['url'],
+                'filename' => $reply['filename'],
             ),
           CURLOPT_HTTPHEADER => array(
-            "Authorization: TOKEN"
+            "Authorization: GtPn!oM74dAeY3EcV0n0"
           ),
         ));
 
@@ -118,7 +113,323 @@ class WebhookController extends Controller
         curl_close($curl);
 
         return $response;
+
     }
+
+//     public function ambilchat($input_source = "php://input")
+//   {
+
+//     $json = file_get_contents($input_source);
+//     $data = json_decode($json, true);
+//     if ($data != null) {
+//       if (substr($data['sender'], 0, 2) == 62) {
+//         $sender = preg_replace('/^62/', '0', $data['sender']);
+//       } else if (substr($data['sender'], 0, 1) == 0) {
+//         $sender = $data['sender'];
+//       }
+//       $message = $data['message'];
+//       $member = Member::where('no_member', $sender)->first();
+//       $user = User::where('no', $sender)->first();
+//       $noperusahaan = Setting::where('no_penerima_pesan', $sender)->first();
+//       $setting = Setting::first();
+//       $tokenfonnte = $setting->token_fonnte;
+
+//       if ($member != null) {
+//         $getpegawai = User::where('id', $member->id_users)->first();
+//         $curl = curl_init();
+//         curl_setopt_array($curl, array(
+//           CURLOPT_URL => 'https://api.fonnte.com/send',
+//           CURLOPT_RETURNTRANSFER => true,
+//           CURLOPT_ENCODING => '',
+//           CURLOPT_MAXREDIRS => 10,
+//           CURLOPT_TIMEOUT => 0,
+//           CURLOPT_FOLLOWLOCATION => true,
+//           CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+//           CURLOPT_CUSTOMREQUEST => 'POST',
+//           CURLOPT_POSTFIELDS => array(
+//             'target' => $getpegawai->no,
+//             'message' => $sender . " (" . $member->nama_member . ")\n" . $message,
+//             // 'url' => 'https://md.fonnte.com/images/wa-logo.png',
+//             // 'filename' => 'filename',
+//             'schedule' => '0',
+//             'typing' => false,
+//             'delay' => '2',
+//             'countryCode' => '62',
+//           ),
+//           CURLOPT_HTTPHEADER => array(
+//             'Authorization: ' . $tokenfonnte
+//           ),
+//         ));
+
+//         $response = curl_exec($curl);
+//         curl_close($curl);
+//         $data = json_decode($response, true); // Menguraikan respons JSON menjadi array
+//         $status = $data['status']; // Mendapatkan nilai "status" dari array
+
+//         if ($status == 1) {
+//           $chat = new Chat();
+//           $chat->no_pengirim = $sender;
+//           $chat->no_penerima = $getpegawai->no;
+//           $chat->isi_pesan = $message;
+//           $chat->save();
+//         }
+//       } else if ($user != null) {
+//         if ($message == "/Template") {
+//           $chattemplate = ChatTemplate::get();
+//           $jumlahtemplate = count($chattemplate);
+//           for ($i = 0; $i < $jumlahtemplate; $i++) {
+//             $pesan = str_replace('\n', "\n", $chattemplate[$i]->template_chat);
+//             $curl = curl_init();
+//             curl_setopt_array($curl, array(
+//               CURLOPT_URL => 'https://api.fonnte.com/send',
+//               CURLOPT_RETURNTRANSFER => true,
+//               CURLOPT_ENCODING => '',
+//               CURLOPT_MAXREDIRS => 10,
+//               CURLOPT_TIMEOUT => 0,
+//               CURLOPT_FOLLOWLOCATION => true,
+//               CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+//               CURLOPT_CUSTOMREQUEST => 'POST',
+//               CURLOPT_POSTFIELDS => array(
+//                 'target' => $sender,
+//                 'message' => $pesan,
+//                 // 'url' => 'https://md.fonnte.com/images/wa-logo.png',
+//                 // 'filename' => 'filename',
+//                 'schedule' => '0',
+//                 'typing' => false,
+//                 'delay' => '2',
+//                 'countryCode' => '62',
+//               ),
+//               CURLOPT_HTTPHEADER => array(
+//                 'Authorization: ' . $tokenfonnte
+//               ),
+//             ));
+//             $response = curl_exec($curl);
+//             curl_close($curl);
+//           }
+//         } else {
+//           $tempgetmember = preg_match("/\d+/", $message, $tempnomember);
+//           if ($tempnomember != null) {
+//             $nomember = $tempnomember[0];
+//             $cekmember = Member::where('no_member', $nomember)->first();
+//             if ($cekmember != null) {
+//               if ($cekmember->id_users == $user->id) {
+//                 $temppesan = explode($nomember, $message);
+//                 $temppesan2 = explode("\n", $temppesan[1]);
+//                 $pesan = $temppesan2[1];
+//                 $curl = curl_init();
+//                 curl_setopt_array($curl, array(
+//                   CURLOPT_URL => 'https://api.fonnte.com/send',
+//                   CURLOPT_RETURNTRANSFER => true,
+//                   CURLOPT_ENCODING => '',
+//                   CURLOPT_MAXREDIRS => 10,
+//                   CURLOPT_TIMEOUT => 0,
+//                   CURLOPT_FOLLOWLOCATION => true,
+//                   CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+//                   CURLOPT_CUSTOMREQUEST => 'POST',
+//                   CURLOPT_POSTFIELDS => array(
+//                     'target' => $nomember,
+//                     'message' => $pesan,
+//                     // 'url' => 'https://md.fonnte.com/images/wa-logo.png',
+//                     // 'filename' => 'filename',
+//                     'schedule' => '0',
+//                     'typing' => false,
+//                     'delay' => '2',
+//                     'countryCode' => '62',
+//                   ),
+//                   CURLOPT_HTTPHEADER => array(
+//                     'Authorization: ' . $tokenfonnte
+//                   ),
+//                 ));
+//                 $response = curl_exec($curl);
+//                 curl_close($curl);
+//                 $data = json_decode($response, true); // Menguraikan respons JSON menjadi array
+//                 $status = $data['status']; // Mendapatkan nilai "status" dari array
+
+//                 if ($status == 1) {
+//                   $chat = new Chat();
+//                   $chat->no_pengirim = $sender;
+//                   $chat->no_penerima = $nomember;
+//                   $chat->isi_pesan = $pesan;
+//                   $chat->save();
+//                 }
+//               } else {
+//                 $curl = curl_init();
+//                 curl_setopt_array($curl, array(
+//                   CURLOPT_URL => 'https://api.fonnte.com/send',
+//                   CURLOPT_RETURNTRANSFER => true,
+//                   CURLOPT_ENCODING => '',
+//                   CURLOPT_MAXREDIRS => 10,
+//                   CURLOPT_TIMEOUT => 0,
+//                   CURLOPT_FOLLOWLOCATION => true,
+//                   CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+//                   CURLOPT_CUSTOMREQUEST => 'POST',
+//                   CURLOPT_POSTFIELDS => array(
+//                     'target' => $sender,
+//                     'message' => "No yang Anda kirimkan bukan member Anda",
+//                     // 'url' => 'https://md.fonnte.com/images/wa-logo.png',
+//                     // 'filename' => 'filename',
+//                     'schedule' => '0',
+//                     'typing' => false,
+//                     'delay' => '2',
+//                     'countryCode' => '62',
+//                   ),
+//                   CURLOPT_HTTPHEADER => array(
+//                     'Authorization: ' . $tokenfonnte
+//                   ),
+//                 ));
+//                 $response = curl_exec($curl);
+//                 curl_close($curl);
+//               }
+//             } else {
+//               $curl = curl_init();
+//               curl_setopt_array($curl, array(
+//                 CURLOPT_URL => 'https://api.fonnte.com/send',
+//                 CURLOPT_RETURNTRANSFER => true,
+//                 CURLOPT_ENCODING => '',
+//                 CURLOPT_MAXREDIRS => 10,
+//                 CURLOPT_TIMEOUT => 0,
+//                 CURLOPT_FOLLOWLOCATION => true,
+//                 CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+//                 CURLOPT_CUSTOMREQUEST => 'POST',
+//                 CURLOPT_POSTFIELDS => array(
+//                   'target' => $sender,
+//                   'message' => "No yang Anda kirimkan bukan member",
+//                   // 'url' => 'https://md.fonnte.com/images/wa-logo.png',
+//                   // 'filename' => 'filename',
+//                   'schedule' => '0',
+//                   'typing' => false,
+//                   'delay' => '2',
+//                   'countryCode' => '62',
+//                 ),
+//                 CURLOPT_HTTPHEADER => array(
+//                   'Authorization: ' . $tokenfonnte
+//                 ),
+//               ));
+//               $response = curl_exec($curl);
+//               curl_close($curl);
+//             }
+//           } else {
+//             $curl = curl_init();
+//             curl_setopt_array($curl, array(
+//               CURLOPT_URL => 'https://api.fonnte.com/send',
+//               CURLOPT_RETURNTRANSFER => true,
+//               CURLOPT_ENCODING => '',
+//               CURLOPT_MAXREDIRS => 10,
+//               CURLOPT_TIMEOUT => 0,
+//               CURLOPT_FOLLOWLOCATION => true,
+//               CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+//               CURLOPT_CUSTOMREQUEST => 'POST',
+//               CURLOPT_POSTFIELDS => array(
+//                 'target' => $sender,
+//                 'message' => "Pesan tidak terkirim",
+//                 // 'url' => 'https://md.fonnte.com/images/wa-logo.png',
+//                 // 'filename' => 'filename',
+//                 'schedule' => '0',
+//                 'typing' => false,
+//                 'delay' => '2',
+//                 'countryCode' => '62',
+//               ),
+//               CURLOPT_HTTPHEADER => array(
+//                 'Authorization: ' . $tokenfonnte
+//               ),
+//             ));
+//             $response = curl_exec($curl);
+//             curl_close($curl);
+//           }
+//         }
+//       } else if ($noperusahaan != null) {
+//         $tempgettarget = preg_match("/\d+/", $message, $tempnotarget);
+//         if ($tempnotarget != null) {
+//           $notarget = $tempnotarget[0];
+//           $temppesan = explode($notarget, $message);
+//           $temppesan2 = explode("\n", $temppesan[1]);
+//           $pesan = $temppesan2[1];
+//           $curl = curl_init();
+//           curl_setopt_array($curl, array(
+//             CURLOPT_URL => 'https://api.fonnte.com/send',
+//             CURLOPT_RETURNTRANSFER => true,
+//             CURLOPT_ENCODING => '',
+//             CURLOPT_MAXREDIRS => 10,
+//             CURLOPT_TIMEOUT => 0,
+//             CURLOPT_FOLLOWLOCATION => true,
+//             CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+//             CURLOPT_CUSTOMREQUEST => 'POST',
+//             CURLOPT_POSTFIELDS => array(
+//               'target' => $notarget,
+//               'message' => $pesan,
+//               // 'url' => 'https://md.fonnte.com/images/wa-logo.png',
+//               // 'filename' => 'filename',
+//               'schedule' => '0',
+//               'typing' => false,
+//               'delay' => '2',
+//               'countryCode' => '62',
+//             ),
+//             CURLOPT_HTTPHEADER => array(
+//               'Authorization: ' . $tokenfonnte
+//             ),
+//           ));
+//           $response = curl_exec($curl);
+//           curl_close($curl);
+//         } else {
+//           $curl = curl_init();
+//           curl_setopt_array($curl, array(
+//             CURLOPT_URL => 'https://api.fonnte.com/send',
+//             CURLOPT_RETURNTRANSFER => true,
+//             CURLOPT_ENCODING => '',
+//             CURLOPT_MAXREDIRS => 10,
+//             CURLOPT_TIMEOUT => 0,
+//             CURLOPT_FOLLOWLOCATION => true,
+//             CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+//             CURLOPT_CUSTOMREQUEST => 'POST',
+//             CURLOPT_POSTFIELDS => array(
+//               'target' => $sender,
+//               'message' => "Pesan tidak terkirim",
+//               // 'url' => 'https://md.fonnte.com/images/wa-logo.png',
+//               // 'filename' => 'filename',
+//               'schedule' => '0',
+//               'typing' => false,
+//               'delay' => '2',
+//               'countryCode' => '62',
+//             ),
+//             CURLOPT_HTTPHEADER => array(
+//               'Authorization: ' . $tokenfonnte
+//             ),
+//           ));
+//           $response = curl_exec($curl);
+//           curl_close($curl);
+//         }
+//       } else {
+//         if ($setting->no_penerima_pesan != null) {
+//           $curl = curl_init();
+//           curl_setopt_array($curl, array(
+//             CURLOPT_URL => 'https://api.fonnte.com/send',
+//             CURLOPT_RETURNTRANSFER => true,
+//             CURLOPT_ENCODING => '',
+//             CURLOPT_MAXREDIRS => 10,
+//             CURLOPT_TIMEOUT => 0,
+//             CURLOPT_FOLLOWLOCATION => true,
+//             CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+//             CURLOPT_CUSTOMREQUEST => 'POST',
+//             CURLOPT_POSTFIELDS => array(
+//               'target' => $setting->no_penerima_pesan,
+//               'message' => $sender . "\n" . $message,
+//               // 'url' => 'https://md.fonnte.com/images/wa-logo.png',
+//               // 'filename' => 'filename',
+//               'schedule' => '0',
+//               'typing' => false,
+//               'delay' => '2',
+//               'countryCode' => '62',
+//             ),
+//             CURLOPT_HTTPHEADER => array(
+//               'Authorization: ' . $tokenfonnte
+//             ),
+//           ));
+//           $response = curl_exec($curl);
+//           curl_close($curl);
+//         }
+//       }
+//     }
+//   }
 
     /**
      * Store a newly created resource in storage.
