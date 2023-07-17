@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Pegawai;
+use Illuminate\Http\Request;
 use App\Http\Requests\StorePegawaiRequest;
 use App\Http\Requests\UpdatePegawaiRequest;
 use Illuminate\Support\Facades\Auth;
@@ -23,6 +24,7 @@ class PegawaiController extends Controller
     // Mendapatkan tahun yang dipilih dari request
     $selectedYear = $request->input('year', null);
 
+<<<<<<< Updated upstream
     // Mengambil data jumlah pasien setiap user setiap bulan
     $data = Member::select(DB::raw('COUNT(*) as total, YEAR(members.created_at) as year, DATE_FORMAT(members.created_at, "%Y-%m") as month, users.nama'))
         ->join('users', 'members.user_id', '=', 'users.id')
@@ -38,6 +40,59 @@ class PegawaiController extends Controller
     $chartData = [];
     $usernames = [];
     $years = [];
+=======
+    function manajemen(Request $request){
+                // Mendapatkan tahun yang dipilih dari request
+                $selectedYear = $request->input('year', null);
+
+                // Mengambil data jumlah pasien setiap user setiap bulan
+                $data = Member::select(DB::raw('COUNT(*) as total, YEAR(members.created_at) as year, DATE_FORMAT(members.created_at, "%Y-%m") as month, users.nama'))
+                    ->join('users', 'members.user_id', '=', 'users.id')
+                    ->when($selectedYear, function ($query, $selectedYear) {
+                        return $query->whereYear('members.created_at', $selectedYear);
+                    })
+                    ->groupBy('members.user_id', 'year', 'month', 'users.nama')
+                    ->orderBy('year', 'asc')
+                    ->orderBy('month', 'asc')
+                    ->get();
+
+                // Membentuk data untuk chart
+                $chartData = [];
+                $usernames = [];
+                $years = [];
+
+                foreach ($data as $row) {
+                    $chartData[$row->nama][$row->year][] = $row->total;
+                    if (!in_array($row->nama, $usernames)) {
+                        $usernames[] = $row->nama;
+                    }
+                    if (!in_array($row->year, $years)) {
+                        $years[] = $row->year;
+                    }
+                }
+
+                // Mengambil label bulan dari data yang tersedia
+                $labels = Member::select(DB::raw('DISTINCT DATE_FORMAT(members.created_at, "%Y-%m") as month'))
+                    ->when($selectedYear, function ($query, $selectedYear) {
+                        return $query->whereYear('members.created_at', $selectedYear);
+                    })
+                    ->orderBy('month')
+                    ->pluck('month')
+                    ->toArray();
+
+                // Ubah format label bulan menjadi nama bulan
+                $labels = array_map(function ($label) {
+                    $date = Carbon::createFromFormat('Y-m', $label);
+                    return $date->format('F');
+                }, $labels);
+
+                return view('manajemen.manajemen', compact('chartData', 'labels', 'usernames', 'years'));
+    }
+
+    public function grafik(Request $request) {
+        // Mendapatkan tahun yang dipilih dari request
+        $selectedYear = $request->input('year', null);
+>>>>>>> Stashed changes
 
     foreach ($data as $row) {
         $chartData[$row->nama][$row->year][] = $row->total;
