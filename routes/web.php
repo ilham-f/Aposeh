@@ -98,6 +98,10 @@ Route::group(['middleware' => 'auth'], function() {
         Route::get('/ubahpwd', [UserController::class, 'ubahpw']);
         Route::get('/charts', [PegawaiController::class, 'charts']);
         Route::get('/ubahpwd', [UserController::class, 'ubahpw']);
+
+        Route::resource('/pegawai/obat', ObatController::class);
+        Route::get('/createObat', [tambahObatController::class, 'create']);
+        Route::post('storeObat', [tambahObatController::class, 'store']);
     });
 
 });
