@@ -32,18 +32,7 @@ class DatabaseSeeder extends Seeder
         //         $keluhans->random(rand(1, 3))->pluck('id')->toArray()
         //     );
         // });
-        DB::table('users')->insert([
-            'email' => 'example@example.com',
-            'email_verified_at' => null,
-            'password' => Hash::make('123'),
-            'role' => 'manajemen',
-            'nama' => 'John Doe',
-            'alamat' => '123 Main Street',
-            'notelp' => '123456789',
-            'status' => '1',
-            'remember_token' => null,
-            'created_at' => now(),
-            'updated_at' => now(),
+       
         // ]);
 
         // $keluhans = Keluhan::all();

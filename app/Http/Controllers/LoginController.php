@@ -27,6 +27,7 @@ class LoginController extends Controller
                 return redirect()->intended('/admin');
 
             // dd(Auth::user()->role);
+            }
             if(Auth::user()->role == 'manajemen'){
                 return redirect()->intended('/manajemen');
             }
@@ -36,7 +37,7 @@ class LoginController extends Controller
         }
 
         return back()->with('alert', 'Gagal masuk ke akun Anda, silakan coba lagi!');
-    }}
+    }
 
     public function logout(Request $request)
     {

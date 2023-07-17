@@ -69,6 +69,7 @@ Route::group(['middleware' => 'auth'], function() {
         Route::get('/tambahkategori', [AdminController::class, 'tambahkategori']);
         Route::get('/tabelkeluhan', [AdminController::class, 'tabelkeluhan']);
         Route::get('/tambahkeluhan', [AdminController::class, 'tambahkeluhan']);
+    });
     Route::group(['middleware' => 'cekrole:manajemen'], function() {
         Route::get('/manajemen', [PegawaiController::class, 'manajemen']);
         // Route::get('/grafik', [PegawaiController::class, 'grafik']);
@@ -122,5 +123,3 @@ Route::put('/profil/{id}', [UserController::class, 'update']);
 Route::put('/ubahpw', [UserController::class, 'updatepw']);
 // Kirim Resep
 Route::post('/kirimresep', [ResepController::class, 'store']);
-
-});
