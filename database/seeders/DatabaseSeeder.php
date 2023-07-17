@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\Obat;
+use App\Models\Member;
 use App\Models\Keluhan;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
@@ -55,6 +56,28 @@ class DatabaseSeeder extends Seeder
             'created_at' => now(),
             'updated_at' => now(),
         ]);
-
+        DB::table('users')->insert([
+            'email' => 'example2@example.com',
+            'email_verified_at' => null,
+            'password' => Hash::make('a'),
+            'role' => 'pegawai',
+            'nama' => 'John Doe',
+            'alamat' => '123 Main Street',
+            'notelp' => '123456729',
+            'status' => '1',
+            'remember_token' => null,
+            'created_at' => now(),
+            'updated_at' => now(),
+        ]);
+        for ($i=1; $i < 1000; $i++) { 
+            $bulan = rand('1', '12');
+            Member::create([
+                'user_id'=>2,
+                'nama_member'=>'Abc',
+                'notelp'=>'08123',
+                'alamat'=>'jl jojoran',
+                'created_at'=>"2023-$bulan-01"
+            ]);
+        }
     }
 }

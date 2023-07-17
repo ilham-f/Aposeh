@@ -80,6 +80,9 @@ Route::group(['middleware' => 'auth'], function() {
         Route::get('/createKeyword', [TemplateReplyController::class, 'create']);
         Route::post('/storeKeyword', [TemplateReplyController::class, 'store']);
         Route::get('/datapegawai', [PegawaiController::class, 'tambahdatapegawai']);
+        Route::get('/datapegawai/keaktifan', [PegawaiController::class, 'keaktifan']);
+        Route::get('/keaktifan/{id}', [PegawaiController::class, 'detailkeaktifan']);
+        Route::get('/keaktifan-bulanan', [PegawaiController::class, 'getKeaktifanBulanan']);
         Route::get('/datapegawai/create', [PegawaiController::class, 'create']);
         Route::post('/datapegawai/create', [PegawaiController::class, 'store']);
         // Route::put('/datapegawai/{id}/non-aktif', [PegawaiController::class, 'store']);

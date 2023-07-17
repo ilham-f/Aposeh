@@ -205,4 +205,32 @@ class PegawaiController extends Controller
     {
         //
     }
+
+    public function keaktifan() 
+    {
+        $user = User::where('role','pegawai')->get();
+        return view('manajemen.keaktifanpegawai',compact('user'));
+    }
+    public function detailkeaktifan($id) 
+    {
+        $memberThisMonth = Member::where('user_id',$id)->whereMonth('created_at',date('m'))->count();
+        $memberThisYear = Member::where('user_id',$id)->whereYear('created_at',date('Y'))->count();
+        return view('manajemen.detailkeaktifanpegawai',compact('memberThisMonth','memberThisYear','id'));
+    }
+    public function getKeaktifanBulanan(Request $request) 
+    {
+      
+          $monthlyData = Member::selectRaw("DATE_FORMAT(created_at, '%M') AS month, COUNT(*) AS count")
+          ->whereYear('created_at', date('Y'))
+          ->where('user_id',$request->id)
+          ->groupBy('month')
+          ->orderByRaw("MONTH(created_at)")
+          ->get();
+       
+        $bulan = $monthlyData->pluck('month')->toArray();
+        $dataBulanan = $monthlyData->pluck('count')->toArray();
+        return response()->json(['month'=>$bulan,'dataBulanan'=>$dataBulanan]);
+    }
+    
+
 }

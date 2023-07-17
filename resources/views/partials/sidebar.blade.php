@@ -237,6 +237,9 @@ class="z-20 hidden w-64 overflow-y-auto bg-white dark:bg-gray-800 md:block flex-
             <li class="px-2 py-1 transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200">
               <a class="w-full" href="/datapegawai">Tambah Data</a>
             </li>
+            <li class="px-2 py-1 transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200">
+              <a class="w-full" href="/datapegawai/keaktifan">Keaktifan Pegawai</a>
+            </li>
           </ul>
         </template>
       </li>
