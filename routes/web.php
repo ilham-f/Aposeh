@@ -75,9 +75,6 @@ Route::group(['middleware' => 'auth'], function() {
         Route::post('/creatememberpost', [MemberController::class, 'store']);
     });
 
-    Route::group(['middleware' => 'cekrole:pegawai'], function() {
-        Route::get('/pegawai', [PegawaiController::class, 'pegawai']);
-        Route::get('/pegawai/member', [PegawaiController::class, 'member']);
     Route::group(['middleware' => 'cekrole:manajemen'], function() {
         Route::get('/manajemen', [PegawaiController::class, 'manajemen']);
         // Route::get('/grafik', [PegawaiController::class, 'grafik']);
