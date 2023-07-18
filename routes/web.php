@@ -10,7 +10,16 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\TransaksiController;
 use App\Http\Controllers\UserController;
+<<<<<<< Updated upstream
 use App\Http\Controllers\GoogleController;
+=======
+use App\Http\Controllers\ObatController;
+use App\Http\Controllers\TemplateReplyController;
+use App\Http\Controllers\keywordChatController;
+use App\Http\Controllers\keywordController;
+use App\Http\Controllers\MemberController;
+use App\Http\Controllers\WebhookController;
+>>>>>>> Stashed changes
 
 /*
 |--------------------------------------------------------------------------
@@ -24,11 +33,24 @@ use App\Http\Controllers\GoogleController;
 */
 
 // Customer tanpa login
+<<<<<<< Updated upstream
 Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('/produk', [ObatController::class, 'index']);
 Route::get('produk/{obat:slug}', [ObatController::class, 'show']);
 Route::get('/categories', [CategoryController::class, 'index']);
 Route::get('categories/{category:slug}', [CategoryController::class, 'show']);
+=======
+Route::get('/', [LoginController::class, 'index']);
+
+// Webhook
+Route::match(['get', 'post'], '/webhook', [WebhookController::class, 'index']);
+Route::post('/kirimchat', [WebhookController::class, 'kirim']);
+// Route::any('/webhook', [WebhookController::class, 'index']);
+// Route::get('/produk', [ObatController::class, 'index']);
+// Route::get('produk/{obat:slug}', [ObatController::class, 'show']);
+// Route::get('/categories', [CategoryController::class, 'index']);
+// Route::get('categories/{category:slug}', [CategoryController::class, 'show']);
+>>>>>>> Stashed changes
 
 // User Regis
 Route::post('/regis', [RegisterController::class, 'store']);
@@ -45,6 +67,7 @@ Route::get('/google/callback', [GoogleController::class, 'handleGoogleCallback']
 Route::group(['middleware' => 'auth'], function() {
 
     // Halaman yang bisa diakses oleh Admin
+<<<<<<< Updated upstream
     Route::group(['middleware' => 'cekrole:admin'], function() {
         Route::get('/admin', [AdminController::class, 'index']);
         Route::get('/tabelobat', [AdminController::class, 'tabelobat']);
@@ -60,6 +83,31 @@ Route::group(['middleware' => 'auth'], function() {
         Route::get('/afterpmblian', [TransaksiController::class, 'after'])->name('after');
         Route::get('/kirimresep', [UserController::class, 'resep']);
         Route::get('/profile', [UserController::class, 'profile']);
+=======
+    Route::group(['middleware' => 'cekrole:manajemen'], function() {
+        Route::get('/manajemen', [PegawaiController::class, 'manajemen']);
+        // Route::get('/grafik', [PegawaiController::class, 'grafik']);
+        Route::get('/chatmasuk', [PegawaiController::class, 'chatmasuk']);
+        Route::get('/pasien', [PegawaiController::class, 'pasien']);
+        Route::get('/ubahpwd', [UserController::class, 'ubahpw']);
+        Route::get('/history', [PegawaiController::class, 'history']);
+        Route::resource('/Auto-ReplyChat', keywordChatController::class);
+        Route::get('/createKeyword', [TemplateReplyController::class, 'create']);
+        Route::post('/storeKeyword', [TemplateReplyController::class, 'store']);
+        Route::get('/datapegawai', [PegawaiController::class, 'tambahdatapegawai']);
+        Route::get('/ubahpwd', [UserController::class, 'ubahpw']);
+        Route::get('/indexdatamember', [MemberController::class, 'index']);
+        Route::get('/createmember', [MemberController::class, 'create']);
+        Route::post('/creatememberpost', [MemberController::class, 'store']);
+    });
+
+    Route::group(['middleware' => 'cekrole:pegawai'], function() {
+        Route::get('/pegawai', [PegawaiController::class, 'pegawai']);
+        Route::get('/pegawai/member', [PegawaiController::class, 'member']);
+        Route::get('/pegawai/createmember', [PegawaiController::class, 'memberPeg']);
+        Route::get('/ubahpwd', [UserController::class, 'ubahpw']);
+        Route::get('/charts', [PegawaiController::class, 'charts']);
+>>>>>>> Stashed changes
         Route::get('/ubahpwd', [UserController::class, 'ubahpw']);
         Route::get('/rwytpmblian', [TransaksiController::class, 'index']);
         Route::get('/keranjang', [CartController::class, 'index'])->name('cart.list');
