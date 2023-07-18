@@ -22,10 +22,11 @@
                 <thead>
                     <tr
                         class="text-xs font-semibold tracking-wide text-left text-gray-500 uppercase border-b dark:border-gray-700 bg-gray-50 dark:text-gray-400 dark:bg-gray-800">
-                        <th class="px-4 py-3">Pegawai</th>
-                        <th class="px-4 py-3">Response Time</th>
-                        <th class="px-4 py-3">Keaktifan Pegawai</th>
-                        <th class="px-4 py-3">Date</th>
+                        <th class="px-4 py-3">Member</th>
+                        <th class="px-4 py-3">Alamat</th>
+                        <th class="px-4 py-3">No Telepon</th>
+                        <th class="px-4 py-3">Status</th>
+                        <th class="px-4 py-3">Ubah</th>
                     </tr>
                 </thead>
                 <tbody class="bg-white divide-y dark:divide-gray-700 dark:bg-gray-800">
@@ -52,7 +53,7 @@
                                 @endif
                             </td>
                             <td class="px-4 py-3 text-xs flex items-center justify-center">
-                                <button type="submit" class="flex items-center justify-center mr-0 w-half px-4 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-blue-600 border border-transparent rounded-lg active:bg-blue-600 hover:bg-blue-700 focus:outline-none focus:shadow-outline-blue">
+                                <a href="/editmember/{{ $user->id }}" class="flex items-center justify-center mr-0 w-half px-4 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-blue-600 border border-transparent rounded-lg active:bg-blue-600 hover:bg-blue-700 focus:outline-none focus:shadow-outline-blue">
                                     <svg class="w-5 h-5" aria-hidden="true" fill="none" stroke-linecap="round" stroke-linejoin="round"
                                         stroke-width="2" viewBox="0 0 24 24" stroke="currentColor">
                                         <path
@@ -60,7 +61,7 @@
                                         </path>
                                     </svg>
                                     Ubah
-                                </button>
+                                </a>
                             </td>
                         </tr>
                     @endforeach

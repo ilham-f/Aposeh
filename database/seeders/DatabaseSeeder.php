@@ -70,7 +70,7 @@ class DatabaseSeeder extends Seeder
             'updated_at' => now(),
         ]);
         for ($i=1; $i < 1000; $i++) { 
-            $bulan = rand('1', '12');
+            $bulan = rand('2', '12');
             Member::create([
                 'user_id'=>2,
                 'nama_member'=>'Abc',
