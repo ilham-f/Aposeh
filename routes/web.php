@@ -6,11 +6,13 @@ use App\Http\Controllers\LoginController;
 use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\PegawaiController;
 use App\Http\Controllers\UserController;
+
 use App\Http\Controllers\ObatController;
 use App\Http\Controllers\TemplateReplyController;
 use App\Http\Controllers\keywordChatController;
 use App\Http\Controllers\keywordController;
 use App\Http\Controllers\MemberController;
+use App\Http\Controllers\WebhookController;
 
 /*
 |--------------------------------------------------------------------------
@@ -28,11 +30,7 @@ Route::get('/', [LoginController::class, 'index']);
 
 // Webhook
 Route::match(['get', 'post'], '/webhook', [WebhookController::class, 'index']);
-// Route::any('/webhook', [WebhookController::class, 'index']);
-// Route::get('/produk', [ObatController::class, 'index']);
-// Route::get('produk/{obat:slug}', [ObatController::class, 'show']);
-// Route::get('/categories', [CategoryController::class, 'index']);
-// Route::get('categories/{category:slug}', [CategoryController::class, 'show']);
+Route::post('/kirimchat', [WebhookController::class, 'kirim']);
 
 // User Regis
 Route::post('/regis', [RegisterController::class, 'store']);
@@ -80,6 +78,29 @@ Route::group(['middleware' => 'auth'], function() {
     Route::group(['middleware' => 'cekrole:pegawai'], function() {
         Route::get('/pegawai', [PegawaiController::class, 'pegawai']);
         Route::get('/pegawai/member', [PegawaiController::class, 'member']);
+    Route::group(['middleware' => 'cekrole:manajemen'], function() {
+        Route::get('/manajemen', [PegawaiController::class, 'manajemen']);
+        // Route::get('/grafik', [PegawaiController::class, 'grafik']);
+        Route::get('/chatmasuk', [PegawaiController::class, 'chatmasuk']);
+        Route::get('/pasien', [PegawaiController::class, 'pasien']);
+        Route::get('/ubahpwd', [UserController::class, 'ubahpw']);
+        Route::get('/history', [PegawaiController::class, 'history']);
+        Route::resource('/Auto-ReplyChat', keywordChatController::class);
+        Route::get('/createKeyword', [TemplateReplyController::class, 'create']);
+        Route::post('/storeKeyword', [TemplateReplyController::class, 'store']);
+        Route::get('/datapegawai', [PegawaiController::class, 'tambahdatapegawai']);
+        Route::get('/ubahpwd', [UserController::class, 'ubahpw']);
+        Route::get('/indexdatamember', [MemberController::class, 'index']);
+        Route::get('/createmember', [MemberController::class, 'create']);
+        Route::post('/creatememberpost', [MemberController::class, 'store']);
+    });
+
+    Route::group(['middleware' => 'cekrole:pegawai'], function() {
+        Route::get('/pegawai', [PegawaiController::class, 'pegawai']);
+        Route::get('/pegawai/member', [PegawaiController::class, 'member']);
+        Route::get('/pegawai/createmember', [PegawaiController::class, 'memberPeg']);
+        Route::get('/ubahpwd', [UserController::class, 'ubahpw']);
+        Route::get('/charts', [PegawaiController::class, 'charts']);
         Route::get('/ubahpwd', [UserController::class, 'ubahpw']);
         Route::get('/charts', [PegawaiController::class, 'charts']);
         Route::get('/ubahpwd', [UserController::class, 'ubahpw']);

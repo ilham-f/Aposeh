@@ -66,18 +66,20 @@
         <h4 class="mb-4 font-semibold text-gray-800 dark:text-gray-300" style="text-align: center">
             Jumlah Pasien
         </h4>
-        <div>
-            <label for="year">Pilih Tahun :</label>
-            <select name="year" id="year">
-                @foreach ($years as $year)
-                    <option value="{{ $year }}">{{ $year }}</option>
-                @endforeach
-            </select>
+        <div class="flex justify-between p-4 text-white">
+            <div>
+                <label for="year">Pilih Tahun :</label>
+                <select name="year" id="year" style="background-color: transparent">
+                    @foreach ($years as $year)
+                        <option value="{{ $year }}">{{ $year }}</option>
+                    @endforeach
+                </select>
+            </div>
+            <div id="total"></div>
         </div>
         <div style="position: relative; height: 400px; width: 800px;">
             <canvas id="chart1" style="margin-left: 50px"></canvas>
             <div id="legend" style="position: absolute; left: -80px; top: 0;"></div>
-            <div id="total" style="position: absolute; right: 10px; top: 10px;"></div>
         </div>
     </div>
 
@@ -86,6 +88,7 @@
         var usernames = @json($usernames);
         var labels = @json($labels);
 
+        // console.log(labels);
         function updateChart(selectedYear) {
             var ctx = document.getElementById('chart1').getContext('2d');
             var datasets = [];
@@ -150,9 +153,6 @@
         var initialYear = yearSelect.value;
         updateChart(initialYear);
     </script>
-
-
-
 
     <!-- New Table -->
     <div iv class="w-full overflow-hidden rounded-lg shadow-xs" style="margin-top: 40px">

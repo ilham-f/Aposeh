@@ -1,4 +1,4 @@
-@extends('layouts.main')
+@extends('layouts.mainpegawai')
 
 @section('content')
     <form action="/creatememberpost" method="POST" class="w-full max-w-lg mt-4">
@@ -64,35 +64,11 @@
                 @enderror
             </div>
 
-            <div class="w-full md:w-1/3 px-3 mb-6 md:mb-0">
-                <label class="block uppercase tracking-wide text-white text-xs font-bold mb-2" for="grid-state">
-                    Pegawai yang menangani
-                </label>
-                <div class="relative">
-                    <select
-                        class="block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-400 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
-                        id="grid-state" name="user_id">
-
-                        <option selected value="">-- Pilih Pegawai --</option>
-                        @foreach ($pegawai as $p)
-                            <option value="{{ $p->id }}">{{ $p->nama }}</option>
-                        @endforeach
-                    </select>
-                    <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-white">
-                        <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
-                            <path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z" />
-                        </svg>
-                    </div>
-                </div>
-                @error('user_id')
-                    <div class="error text-red-600">{{ $message }}</div>
-                @enderror
-            </div>
-
+            <input type="hidden" name="user_id" value="{{ Auth::user()->id }}">
         </div>
 
         <div class="flex justify-between px-4">
-            <a href="/indexdatamember" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+            <a href="/pegawai/member" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
                 Kembali
             </a>
 
@@ -100,8 +76,5 @@
                 Tambah
             </button>
         </div>
-
-
-
     </form>
 @endsection

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Chat;
 
 class WebhookController extends Controller
 {
@@ -11,109 +12,138 @@ class WebhookController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index($input_source = "php://input")
     {
-        header('Content-Type: application/json; charset=utf-8');
-
-        $json = file_get_contents('php://input');
+        // header('Content-Type: application/json; charset=utf-8');
+        $json = file_get_contents($input_source);
         $data = json_decode($json, true);
-        $device = $data['device'];
-        $sender = $data['sender'];
-        $message = $data['message'];
-        $text= $data['text']; //button text
-        $member= $data['member']; //group member who send the message
-        $name = $data['name'];
-        $location = $data['location'];
-        //data below will only received by device with all feature package
-        //start
-        $url =  $data['url'];
-        $filename =  $data['filename'];
-        $extension=  $data['extension'];
-        //end
+        if($data != null){
+            $sender = $data['sender'];
+            $message = $data['message'];
+            //data below will only received by device with all feature package
+            //start
+            // $url =  $data['url'];
+            // $filename =  $data['filename'];
+            // $extension=  $data['extension'];
+            //end
+            $pesan = strtolower($message);
 
-        if ( $message == "Y" ) {
-            $reply = [
-                "message" => "Untuk mendaftar sebagai member silahkan mengisi data diri berikut:
+            if ( $pesan == "1" or $pesan == "2" ) {
+                $reply = [
+                    "message" => "Mohon menunggu sebentar, Anda akan segera disambungkan dengan pegawai kami",
+                ];
+                Chat::create([
+                    'no_pengirim' => 'unknown',
+                    'no_pengirim' => $sender,
+                    'isi' => $pesan,
+                ]);
+            } elseif ( $pesan == "0" ) {
+                $reply = [
+                    "message" => "Terima kasih telah berkunjung ke Aposeh, semoga anda selalu diberi kesehatan oleh Tuhan YME",
+                ];
+            } elseif ( $pesan == "daftar" ) {
+                $reply = [
+                    "message" => "Mohon menunggu sebentar, Anda akan segera disambungkan dengan pegawai kami",
+                ];
+                Chat::create([
+                    'no_pengirim' => 'unknown',
+                    'no_pengirim' => $sender,
+                    'isi' => $pesan,
+                ]);
+            } elseif ( $pesan == "Keluar" ) {
+                $reply = [
+                    "message" => "Terima kasih telah berkunjung ke Aposeh, semoga anda selalu diberi kesehatan oleh Tuhan YME",
+                ];
+            }
+            elseif ( $pesan == "pembelian" ) {
+                $reply = [
+                    "message" => "Untuk layanan pembelian obat dan pengingat waktu minum obat online hanya diberikan kepada pasien yang terdaftar sebagai member kami.
+                    Apakah anda tertarik untuk mendaftar sebagai member?
 
-                Nama Lengkap (Sesuai KTP) :
-                Alamat :
-                Tanggal Lahir :
-                Jenis Kelamin :
-                Keluhan Saat Ini :",
-            ];
-        } elseif ( $message == "halo" ) {
-            $reply = [
-                "message" => "Selamat datang di Aposeh!
+                    1. Daftar
+                    0. Keluar",
+                ];
+            } elseif ( $pesan == "halo" ) {
+                $reply = [
+                    "message" => "Selamat datang di Aposeh!
 
-                Untuk layanan pembelian obat dan pengingat waktu minum obat online hanya diberikan kepada pasien yang terdaftar sebagai member kami.
-                Apakah anda tertarik untuk mendaftar sebagai member?
-                Ketik Y jika iya,
-                Ketik N jika tidak
+                    Untuk layanan pembelian obat dan pengingat waktu minum obat online hanya diberikan kepada pasien yang terdaftar sebagai member kami.
+                    Apakah anda tertarik untuk mendaftar sebagai member?
 
-                Terima Kasih!",
-            ];
-        } elseif ( $message == "image" ) {
-            $reply = [
-                "message" => "image message",
-                "url" => "https://filesamples.com/samples/image/jpg/sample_640%C3%97426.jpg",
-            ];
-        } elseif ( $message == "audio" ) {
-            $reply = [
-                    "message" => "audio message",
-                "url" => "https://filesamples.com/samples/audio/mp3/sample3.mp3",
-                "filename" => "music",
-            ];
-        } elseif ( $message == "video" ) {
-            $reply = [
-                "message" => "video message",
-                "url" => "https://filesamples.com/samples/video/mp4/sample_640x360.mp4",
-            ];
-        } elseif ( $message == "file" ) {
-            $reply = [
-                "message" => "file message",
-                "url" => "https://filesamples.com/samples/document/docx/sample3.docx",
-                "filename" => "document",
-            ];
-        } else {
-            $reply = [
-                "message" => "Sorry, i don't understand. Please use one of the following keyword :
+                    1. Daftar
+                    0. Keluar",
+                ];
+            } else {
+                $reply = [
+                    "message" => "Maaf, saya tidak mengerti maksud anda. Mohon gunakan kata kunci berikut :
 
-                Test
-                Audio
-                Video
-                Image
-                File",
-            ];
+                    1. Pembelian
+                    2. Daftar",
+                ];
+            }
+
+            $curl = curl_init();
+
+            curl_setopt_array($curl, array(
+              CURLOPT_URL => "https://api.fonnte.com/send",
+              CURLOPT_RETURNTRANSFER => true,
+              CURLOPT_ENCODING => "",
+              CURLOPT_MAXREDIRS => 10,
+              CURLOPT_TIMEOUT => 0,
+              CURLOPT_FOLLOWLOCATION => true,
+              CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+              CURLOPT_CUSTOMREQUEST => "POST",
+              CURLOPT_POSTFIELDS => array(
+                    'target' => $sender,
+                    'message' => $reply['message'],
+                    'schedule' => '0',
+                    'typing' => false,
+                    'delay' => '1',
+                    'countryCode' => '62',
+                ),
+              CURLOPT_HTTPHEADER => array(
+                "Authorization: GtPn!oM74dAeY3EcV0n0"
+              ),
+            ));
+
+            $response = curl_exec($curl);
+
+            curl_close($curl);
+
+            return $response;
         }
+    }
 
+    function kirim(Request $request) {
         $curl = curl_init();
 
-        curl_setopt_array($curl, array(
-          CURLOPT_URL => "https://api.fonnte.com/send",
-          CURLOPT_RETURNTRANSFER => true,
-          CURLOPT_ENCODING => "",
-          CURLOPT_MAXREDIRS => 10,
-          CURLOPT_TIMEOUT => 0,
-          CURLOPT_FOLLOWLOCATION => true,
-          CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-          CURLOPT_CUSTOMREQUEST => "POST",
-          CURLOPT_POSTFIELDS => array(
-                'target' => $sender,
-                'message' => $reply['message'],
-                'url' => $reply['url'],
-                'filename' => $reply['filename'],
-            ),
-          CURLOPT_HTTPHEADER => array(
-            "Authorization: GtPn!oM74dAeY3EcV0n0"
-          ),
-        ));
+            curl_setopt_array($curl, array(
+              CURLOPT_URL => "https://api.fonnte.com/send",
+              CURLOPT_RETURNTRANSFER => true,
+              CURLOPT_ENCODING => "",
+              CURLOPT_MAXREDIRS => 10,
+              CURLOPT_TIMEOUT => 0,
+              CURLOPT_FOLLOWLOCATION => true,
+              CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+              CURLOPT_CUSTOMREQUEST => "POST",
+              CURLOPT_POSTFIELDS => array(
+                    'target' => $sender,
+                    'message' => $reply['message'],
+                    'schedule' => '0',
+                    'typing' => false,
+                    'delay' => '1',
+                    'countryCode' => '62',
+                ),
+              CURLOPT_HTTPHEADER => array(
+                "Authorization: GtPn!oM74dAeY3EcV0n0"
+              ),
+            ));
 
-        $response = curl_exec($curl);
+            $response = curl_exec($curl);
 
-        curl_close($curl);
+            curl_close($curl);
 
-        return $response;
-
+            return $response;
     }
 
 //     public function ambilchat($input_source = "php://input")

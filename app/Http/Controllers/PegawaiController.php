@@ -7,6 +7,8 @@ use App\Http\Requests\StorePegawaiRequest;
 use App\Http\Requests\UpdatePegawaiRequest;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Member;
+use App\Models\Chat;
+use Illuminate\Http\Request;
 use Carbon\Carbon;
 use DB;
 
@@ -18,16 +20,7 @@ class PegawaiController extends Controller
      * @return \Illuminate\Http\Response
      */
 
-    function manajemen(){
-        $years = [2020,2021,2022,2023];
-        $chartData = [];
-        $usernames = [];
-        $labels = [];
-        return view('manajemen.manajemen', compact('chartData', 'labels', 'usernames', 'years'));
-    }
-
-    public function grafik(Request $request)
-    {
+    function manajemen(Request $request){
         // Mendapatkan tahun yang dipilih dari request
         $selectedYear = $request->input('year', null);
 
@@ -72,12 +65,66 @@ class PegawaiController extends Controller
             return $date->format('F');
         }, $labels);
 
+
         return view('manajemen.manajemen', compact('chartData', 'labels', 'usernames', 'years'));
     }
 
-    public function pegawai(){
+    public function pegawai(Request $request){
+
+        $selectedYear = $request->input('year', null);
+
+        // Mengambil data jumlah pasien setiap user setiap bulan
+        $data = Member::select(DB::raw('COUNT(*) as total, YEAR(created_at) as year, DATE_FORMAT(created_at, "%Y-%m") as month'))
+            ->where('user_id',Auth::user()->id)
+            ->when($selectedYear, function ($query, $selectedYear) {
+                return $query->whereYear('created_at', $selectedYear);
+            })
+            ->groupBy('year', 'month')
+            ->orderBy('year', 'asc')
+            ->orderBy('month', 'asc')
+            ->get();
+
+        // Membentuk data untuk chart
+        $usernames = [];
+        $chartData = [];
+        $years = [];
+
+        foreach ($data as $row) {
+            $chartData[$row->year][] = $row->total;
+            if (!in_array($row->nama, $usernames)) {
+                $usernames[] = $row->nama;
+            }
+            if (!in_array($row->year, $years)) {
+                $years[] = $row->year;
+            }
+        }
+
+        // Mengambil label bulan dari data yang tersedia
+        $labels = Member::select(DB::raw('DISTINCT DATE_FORMAT(members.created_at, "%Y-%m") as month'))
+            ->where('user_id',Auth::user()->id)
+            ->when($selectedYear, function ($query, $selectedYear) {
+                return $query->whereYear('members.created_at', $selectedYear);
+            })
+            ->orderBy('month')
+            ->pluck('month')
+            ->toArray();
+
+        // Ubah format label bulan menjadi nama bulan
+        $labels = array_map(function ($label) {
+            $date = Carbon::createFromFormat('Y-m', $label);
+            return $date->format('F');
+        }, $labels);
+
+        $activeMembers = Member::where('status','1')->get();
+        $nonActiveMembers = Member::where('status','0')->get();
+
         return view('pegawai.pegawai',[
-            'title' => 'Dashboard'
+            'activeMembers' => $activeMembers,
+            'nonActiveMembers' => $nonActiveMembers,
+            'usernames' => $usernames,
+            'chartData' => $chartData,
+            'years' => $years,
+            'labels' => $labels
         ]);
     }
 
@@ -95,6 +142,21 @@ class PegawaiController extends Controller
     public function member(){
         return view('pegawai.member',[
             'users' => Member::all()
+        ]);
+    }
+    public function memberPeg(){
+        return view('pegawai.create-member');
+    }
+
+    public function chatmasuk(){
+        $chats = Chat::distinct()->pluck('no_pengirim');
+        // $chatperorang = {};
+
+        // dd($chats);
+        return view('manajemen.chat-masuk',[
+            'chats' => $chats,
+            // 'chatorangmasuk' =>
+            'manajemen' => Auth::user()
         ]);
     }
 
