@@ -115,6 +115,12 @@ class WebhookController extends Controller
     }
 
     function kirim(Request $request) {
+        // dd($request);
+        Chat::create([
+            'no_pengirim' => $request->no_pengirim,
+            'no_penerima' => $request->no_penerima,
+            'isi' => $request->isi
+        ]);
         $curl = curl_init();
 
             curl_setopt_array($curl, array(
@@ -127,8 +133,8 @@ class WebhookController extends Controller
               CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
               CURLOPT_CUSTOMREQUEST => "POST",
               CURLOPT_POSTFIELDS => array(
-                    'target' => $sender,
-                    'message' => $reply['message'],
+                    'target' => $request->no_penerima,
+                    'message' => $request->isi,
                     'schedule' => '0',
                     'typing' => false,
                     'delay' => '1',

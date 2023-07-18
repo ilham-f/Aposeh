@@ -75,11 +75,12 @@
                                     </ul>
                                 @endforeach
                             </div>
-                            <div class="chat-message clearfix" style="position:absolute;bottom: 0; width: 75%">
+                            <div id="chat" class="chat-message clearfix" style="position:absolute;bottom: 0; width: 75%">
                                 <div class="input-group mb-0 flex justify-between items-center">
                                     <form action="/kirimchat" method="post" id="chatform">
                                         @csrf
-                                        <input type="hidden" name="sender" value="" id="target">
+                                        <input type="hidden" name="no_penerima" value="" id="target">
+                                        <input type="hidden" name="no_pengirim" value="{{ Auth::user()->notelp }}">
                                         <textarea style="width: 350%; padding: 10px" name="isi" class="form-control" placeholder="Enter text here..."></textarea>
                                     </form>
                                     <div id="submit" class="input-group-prepend mr-4"
@@ -101,11 +102,13 @@
         $(document).ready(function() {
             var jmlChat = $('#jmlChat').html();
             $('#fotoOrang').hide();
+            $('#chat').hide();
             // alert(jmlChat);
             for (let i = 0; i < jmlChat; i++) {
                 $('.' + i).hide();
 
                 $('#' + i).click(function(e) {
+                    $('#chat').show();
                     $('#fotoOrang').show();
                     e.preventDefault();
                     var noOrang = $('.' + i).attr('value');
