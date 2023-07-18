@@ -13,6 +13,15 @@
             </script>
         @endforeach
     @endif
+    <style>
+        .gap-2 {
+            gap: .5rem
+        }
+
+        .w1\/4 {
+            width: 25%;
+        }
+    </style>
     <h2 class="my-6 text-2xl font-semibold text-gray-700 dark:text-gray-200">
         Keaktifan Pegawai
     </h2>
@@ -60,9 +69,27 @@
         </div>
     </div>
 
-    <div id="chart" style=""></div>
+    <div id="chart" class="mb-2" style=""></div>
 
     <!-- New Table -->
+
+    <div class="grid grid-cols-2 mb-2 gap-2">
+        <div>
+            <select id="year"
+                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                @foreach ($tahunMember as $item)
+                    <option value="{{ $item->year }}">{{ $item->year }}</option>
+                @endforeach
+            </select>
+        </div>
+        <div>
+            <button type="button" id="search-btn"
+                class="flex items-center justify-center w-1/4 px-4 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-lg active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple">
+                Cari
+            </button>
+        </div>
+    </div>
+    <div id="chart2" class="mb-2" style=""></div>
 
 
 
@@ -71,28 +98,60 @@
         integrity="sha256-2Pmvv0kuTBOenSvLm6bvfBSSHrUJ+3A7x6P5Ebd07/g=" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
     <script type="text/javascript">
-
-     $.get("/keaktifan-bulanan",{id:'{{ $id }}'},
-        function (data, textStatus, jqXHR) {
-            var options = {
-            chart: {
-                type: 'line'
+        $.get("/keaktifan-tahunan", {
+                user: '{{ $id }}'
             },
-            series: [{
-                name: 'Member',
-                data: data.dataBulanan
-            }],
-            xaxis: {
-                categories: data.month
-            }
+            function(data, textStatus, jqXHR) {
+                var options = {
+                    chart: {
+                        type: 'line'
+                    },
+                    series: [{
+                        name: 'Member',
+                        data: data.dataTahunan
+                    }],
+                    xaxis: {
+                        categories: data.year
+                    }
+                }
+
+                var chart = new ApexCharts(document.querySelector("#chart"), options);
+
+                chart.render();
+            },
+
+        );
+        $('#search-btn').on('click', function() {
+            let year = $('#year').val();
+            $('#chart2').html('');
+            filterTahun(year);
+        });
+        filterTahun('{{ date('Y') }}')
+
+        function filterTahun(params) {
+            $.get("/keaktifan-bulanan", {
+                    user: '{{ $id }}',
+                    year: params
+                },
+                function(data, textStatus, jqXHR) {
+                    var options = {
+                        chart: {
+                            type: 'line'
+                        },
+                        series: [{
+                            name: 'Member',
+                            data: data.dataBulanan
+                        }],
+                        xaxis: {
+                            categories: data.month
+                        }
+                    }
+
+                    var chart = new ApexCharts(document.querySelector("#chart2"), options);
+
+                    chart.render();
+                },
+            );
         }
-
-        var chart = new ApexCharts(document.querySelector("#chart"), options);
-
-        chart.render();
-        },
-        
-     );
-      
     </script>
 @endsection

@@ -72,11 +72,8 @@ class MemberController extends Controller
      * @return \Illuminate\Http\Response
      */
 
-    public function edit(Program $program)
-  
-   
+    public function edit($member)
     {
-        
         return view('manajemen.editmember',[
             'pegawai' => User::where("role","pegawai")->get(),
             'member'=>Member::find($member)
@@ -91,7 +88,7 @@ class MemberController extends Controller
      * @return \Illuminate\Http\Response
      */
 
-    public function update(UpdateMemberRequest $request, Member $member)
+    public function update(Request $request,  $member)
     {
         //
         $validator = $request->validate([
@@ -99,7 +96,6 @@ class MemberController extends Controller
             'nama_member' => 'required',
             'notelp' => 'required|max:14',
             'alamat' => 'required',
-            'keluhan' => 'required',
             'jk' => 'required',
         ]);
 

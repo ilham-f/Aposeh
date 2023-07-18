@@ -83,15 +83,18 @@ Route::group(['middleware' => 'auth'], function() {
         Route::get('/datapegawai/keaktifan', [PegawaiController::class, 'keaktifan']);
         Route::get('/keaktifan/{id}', [PegawaiController::class, 'detailkeaktifan']);
         Route::get('/keaktifan-bulanan', [PegawaiController::class, 'getKeaktifanBulanan']);
+        Route::get('/keaktifan-tahunan', [PegawaiController::class, 'getKeaktifanTahunan']);
         Route::get('/datapegawai/create', [PegawaiController::class, 'create']);
         Route::post('/datapegawai/create', [PegawaiController::class, 'store']);
-        // Route::put('/datapegawai/{id}/non-aktif', [PegawaiController::class, 'store']);
         Route::get('/datapegawai', [PegawaiController::class, 'tambahdatapegawai']);
         Route::get('/ubahpwd', [UserController::class, 'ubahpw']);
         Route::get('/indexdatamember', [MemberController::class, 'index']);
         Route::get('/createmember', [MemberController::class, 'create']);
+        Route::get('/editmember/{member}', [MemberController::class, 'edit']);
+        Route::put('/editmember/{member}', [MemberController::class, 'update']);
         Route::post('/creatememberpost', [MemberController::class, 'store']);
         
+
         // Route::get('/tabelobat', [PegawaiController::class, 'tabelobat']);
         // Route::get('/tambahobat', [PegawaiController::class, 'tambahobat']);
         // Route::get('/tabelkategori', [PegawaiController::class, 'tabelkategori']);
