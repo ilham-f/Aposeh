@@ -213,24 +213,37 @@ class PegawaiController extends Controller
     }
     public function detailkeaktifan($id) 
     {
+        $tahunMember = DB::table('members as m')
+        ->select(DB::raw('YEAR(m.created_at) as year'))
+        ->where('user_id',$id)
+        ->groupBy('year')
+        ->get();
         $memberThisMonth = Member::where('user_id',$id)->whereMonth('created_at',date('m'))->count();
         $memberThisYear = Member::where('user_id',$id)->whereYear('created_at',date('Y'))->count();
-        return view('manajemen.detailkeaktifanpegawai',compact('memberThisMonth','memberThisYear','id'));
+        return view('manajemen.detailkeaktifanpegawai',compact('memberThisMonth','memberThisYear','id','tahunMember'));
     }
-    public function getKeaktifanBulanan(Request $request) 
+    public function getKeaktifanTahunan(Request $request) 
     {
+        $yearlyData = Member::selectRaw("DATE_FORMAT(created_at, '%Y') AS year, COUNT(*) AS count")
+        ->where('user_id',$request->user)
+        ->groupBy('year')
+        ->orderByRaw("YEAR(created_at)")
+        ->get();
+        $year = $yearlyData->pluck('year')->toArray();
+        $dataTahunan = $yearlyData->pluck('count')->toArray();
+        return response()->json(['year'=>$year,'dataTahunan'=>$dataTahunan]);
+    }
+    function getKeaktifanBulanan(Request $request) {
       
-          $monthlyData = Member::selectRaw("DATE_FORMAT(created_at, '%M') AS month, COUNT(*) AS count")
-          ->whereYear('created_at', date('Y'))
-          ->where('user_id',$request->id)
-          ->groupBy('month')
-          ->orderByRaw("MONTH(created_at)")
-          ->get();
+        $monthlyData = Member::selectRaw("DATE_FORMAT(created_at, '%M') AS month, COUNT(*) AS count")
+        ->whereYear('created_at', $request->year)
+        ->where('user_id',$request->user)
+        ->groupBy('month')
+        ->orderByRaw("MONTH(created_at)")
+        ->get();
        
         $bulan = $monthlyData->pluck('month')->toArray();
         $dataBulanan = $monthlyData->pluck('count')->toArray();
         return response()->json(['month'=>$bulan,'dataBulanan'=>$dataBulanan]);
-    }
-    
-
+      }
 }

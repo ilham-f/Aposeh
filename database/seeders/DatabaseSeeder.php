@@ -71,12 +71,13 @@ class DatabaseSeeder extends Seeder
         ]);
         for ($i=1; $i < 1000; $i++) { 
             $bulan = rand('2', '12');
+            $tahun = rand('3', '8');
             Member::create([
                 'user_id'=>2,
                 'nama_member'=>'Abc',
                 'notelp'=>'08123',
                 'alamat'=>'jl jojoran',
-                'created_at'=>"2023-$bulan-01"
+                'created_at'=>"202$tahun-$bulan-01"
             ]);
         }
     }
