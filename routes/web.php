@@ -58,23 +58,6 @@ Route::get('/form', [PegawaiController::class, 'form']);
 
 Route::group(['middleware' => 'auth'], function() {
 
-    // Halaman yang bisa diakses oleh Admin
-    Route::group(['middleware' => 'cekrole:manajemen'], function() {
-        Route::get('/manajemen', [PegawaiController::class, 'manajemen']);
-        // Route::get('/grafik', [PegawaiController::class, 'grafik']);
-        Route::get('/pasien', [PegawaiController::class, 'pasien']);
-        Route::get('/ubahpwd', [UserController::class, 'ubahpw']);
-        Route::get('/history', [PegawaiController::class, 'history']);
-        Route::resource('/Auto-ReplyChat', keywordChatController::class);
-        Route::get('/createKeyword', [TemplateReplyController::class, 'create']);
-        Route::post('/storeKeyword', [TemplateReplyController::class, 'store']);
-        Route::get('/datapegawai', [PegawaiController::class, 'tambahdatapegawai']);
-        Route::get('/ubahpwd', [UserController::class, 'ubahpw']);
-        Route::get('/indexdatamember', [MemberController::class, 'index']);
-        Route::get('/createmember', [MemberController::class, 'create']);
-        Route::post('/creatememberpost', [MemberController::class, 'store']);
-    });
-
     Route::group(['middleware' => 'cekrole:manajemen'], function() {
         Route::get('/manajemen', [PegawaiController::class, 'manajemen']);
         // Route::get('/grafik', [PegawaiController::class, 'grafik']);
