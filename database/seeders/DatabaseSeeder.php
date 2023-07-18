@@ -46,11 +46,11 @@ class DatabaseSeeder extends Seeder
         DB::table('users')->insert([
             'email' => 'example@example.com',
             'email_verified_at' => null,
-            'password' => Hash::make('a'),
+            'password' => Hash::make('12345'),
             'role' => 'manajemen',
             'nama' => 'John Doe',
             'alamat' => '123 Main Street',
-            'notelp' => '123456789',
+            'notelp' => '081332254144',
             'status' => '1',
             'remember_token' => null,
             'created_at' => now(),
@@ -70,7 +70,7 @@ class DatabaseSeeder extends Seeder
             'updated_at' => now(),
         ]);
         for ($i=1; $i < 1000; $i++) { 
-            $bulan = rand('1', '12');
+            $bulan = rand('2', '12');
             Member::create([
                 'user_id'=>2,
                 'nama_member'=>'Abc',
