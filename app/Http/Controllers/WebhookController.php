@@ -149,7 +149,9 @@ class WebhookController extends Controller
 
             curl_close($curl);
 
-            return $response;
+            return view('manajemen.chat-masuk',[
+                'pesan' => $request->isi,
+            ]);
     }
 
 //     public function ambilchat($input_source = "php://input")
