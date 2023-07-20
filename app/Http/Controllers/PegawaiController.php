@@ -2,15 +2,16 @@
 
 namespace App\Http\Controllers;
 
+use DB;
+use Carbon\Carbon;
+use App\Models\User;
+use App\Models\Member;
 use App\Models\Pegawai;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\StorePegawaiRequest;
 use App\Http\Requests\UpdatePegawaiRequest;
-use Illuminate\Support\Facades\Auth;
-use App\Models\Member;
 use App\Models\Chat;
-use Illuminate\Http\Request;
-use Carbon\Carbon;
-use DB;
 
 class PegawaiController extends Controller
 {
@@ -129,7 +130,8 @@ class PegawaiController extends Controller
     }
 
     public function tambahdatapegawai(){
-        return view('manajemen.datapegawai');
+        $user = User::where('role','pegawai')->get();
+        return view('manajemen.datapegawai',compact('user'));
     }
 
 
@@ -195,7 +197,7 @@ class PegawaiController extends Controller
      */
     public function create()
     {
-        //
+        return view('manajemen.create-datapegawai');
     }
 
     /**
@@ -204,9 +206,20 @@ class PegawaiController extends Controller
      * @param  \App\Http\Requests\StorePegawaiRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(StorePegawaiRequest $request)
+    public function store(Request $request)
     {
-        //
+        $validatedData = $request->validate([
+            'email' => 'required|unique:users',
+            'password' => 'required',
+            'nama' => 'required',
+            'alamat' => 'required',
+            'notelp' => 'required|unique:users',
+        ]);
+        $validatedData['role']='pegawai';
+        $validatedData['password']=bcrypt($validatedData['password']);
+
+        User::create($validatedData);
+        return redirect()->intended('/datapegawai')->withSuccess('Data berhasil disimpan');
     }
 
     /**

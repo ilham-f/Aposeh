@@ -69,6 +69,9 @@ Route::group(['middleware' => 'auth'], function() {
         Route::get('/createKeyword', [TemplateReplyController::class, 'create']);
         Route::post('/storeKeyword', [TemplateReplyController::class, 'store']);
         Route::get('/datapegawai', [PegawaiController::class, 'tambahdatapegawai']);
+        Route::get('/datapegawai/create', [PegawaiController::class, 'create']);
+        Route::post('/datapegawai/create', [PegawaiController::class, 'store']);
+        // Route::put('/datapegawai/{id}/non-aktif', [PegawaiController::class, 'store']);
         Route::get('/ubahpwd', [UserController::class, 'ubahpw']);
         Route::get('/indexdatamember', [MemberController::class, 'index']);
         Route::get('/createmember', [MemberController::class, 'create']);
@@ -79,9 +82,6 @@ Route::group(['middleware' => 'auth'], function() {
         Route::get('/pegawai', [PegawaiController::class, 'pegawai']);
         Route::get('/pegawai/member', [PegawaiController::class, 'member']);
         Route::get('/pegawai/createmember', [PegawaiController::class, 'memberPeg']);
-        Route::get('/ubahpwd', [UserController::class, 'ubahpw']);
-        Route::get('/charts', [PegawaiController::class, 'charts']);
-        Route::get('/ubahpwd', [UserController::class, 'ubahpw']);
         Route::get('/charts', [PegawaiController::class, 'charts']);
         Route::get('/ubahpwd', [UserController::class, 'ubahpw']);
 
