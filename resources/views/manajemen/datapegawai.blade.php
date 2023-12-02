@@ -43,7 +43,7 @@
                         class="text-xs font-semibold tracking-wide text-left text-gray-500 uppercase border-b dark:border-gray-700 bg-gray-50 dark:text-gray-400 dark:bg-gray-800">
                         <th class="px-4 py-3">Pegawai</th>
                         <th class="px-4 py-3">Response Time</th>
-                        <th class="px-4 py-3">Keaktifan Pegawai</th>
+                        <th class="px-4 py-3">Status</th>
                         <th class="px-4 py-3">Date</th>
                     </tr>
                 </thead>
@@ -56,7 +56,7 @@
                                         <p class="font-semibold">{{ $item->nama }}</p>
                                         <p class="text-xs text-gray-600 dark:text-gray-400">
                                             {{ $item->role }}
-                                        </p> 
+                                        </p>
                                     </div>
                                 </div>
                             </td>
@@ -64,10 +64,17 @@
                                 waktu
                             </td>
                             <td class="px-4 py-3 text-xs">
-                                <span
-                                    class="px-2 py-1 font-semibold leading-tight text-orange-700 bg-orange-100 rounded-full dark:text-white dark:bg-orange-600">
-                                    Pending
-                                </span>
+                                @if ($item->status == '1')
+                                    <span
+                                        class="px-2 py-1 font-semibold leading-tight text-green-500 rounded-full dark:text-green-500">
+                                        Aktif
+                                    </span>
+                                @else
+                                    <span
+                                        class="px-2 py-1 font-semibold leading-tight text-red-700 bg-red-100 rounded-full dark:text-white dark:bg-red-600">
+                                        Non-Aktif
+                                    </span>
+                                @endif
                             </td>
                             <td class="px-4 py-3 text-sm">
                                 {{ date('d/m/Y',strtotime($item->created_at)) }}

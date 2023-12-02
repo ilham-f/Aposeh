@@ -75,7 +75,7 @@
                         aria-label="submenu">
                         <li
                             class="px-2 py-1 transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200">
-                            <a class="w-full" href="pages/login.html">Template Chat</a>
+                            <a class="w-full" href="/templatepesan">Template Chat</a>
                         </li>
                     </ul>
                 </template>
@@ -123,7 +123,7 @@
                         aria-label="submenu">
                         <li
                             class="px-2 py-1 transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200">
-                            <a class="w-full" href="pages/login.html">Data Obat</a>
+                            <a class="w-full" href="/manajemen/obat">Data Obat</a>
                         </li>
                     </ul>
                 </template>

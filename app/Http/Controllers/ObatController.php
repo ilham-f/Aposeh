@@ -22,6 +22,14 @@ class ObatController extends Controller
             'data' => $data
         ]);
     }
+    public function index1()
+    {
+        $data = obat::all();
+
+        return view('manajemen.obat',[
+            'data' => $data
+        ]);
+    }
 
     /**
      * Show the form for creating a new resource.
@@ -66,6 +74,11 @@ class ObatController extends Controller
         $data = obat::where('id', $id)->first();
         return view('pegawai.edit-obat')->with('data', $data);
     }
+    public function edit1($id)
+    {
+        $data = obat::where('id', $id)->first();
+        return view('manajemen.edit-obat')->with('data', $data);
+    }
 
     /**
      * Update the specified resource in storage.
@@ -85,6 +98,18 @@ class ObatController extends Controller
 
         obat::where('id', $id)->update($data);
         return redirect()->to('pegawai/obat')->with('succes', 'Berhasil melakukan update data');
+    }
+    public function update1(Request $request, $id)
+    {
+        $data = [
+            'nama_obat'=>$request->nama_obat,
+            'stok' => $request->stok,
+            'harga' => $request->harga,
+            'status' => $request->status,
+        ];
+
+        obat::where('id', $id)->update($data);
+        return redirect()->to('manajemen/obat')->with('succes', 'Berhasil melakukan update data');
     }
 
     /**

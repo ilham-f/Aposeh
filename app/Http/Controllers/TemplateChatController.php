@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\TemplateChat;
+use Illuminate\Http\Request;
 use App\Http\Requests\StoreTemplateChatRequest;
 use App\Http\Requests\UpdateTemplateChatRequest;
 
@@ -15,17 +16,18 @@ class TemplateChatController extends Controller
      */
     public function index()
     {
-        //
+        $data = TemplateChat::get();
+        return view('manajemen.templatepesan',['datablade' => $data]);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
+    public function create(Request $request)
     {
         //
+        $data = $request->validate([
+            'chat'=> 'required|string',
+        ]);
+        TemplateChat::create($data);
+        return back();
     }
 
     /**
@@ -50,37 +52,25 @@ class TemplateChatController extends Controller
         //
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\TemplateChat  $templateChat
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(TemplateChat $templateChat)
+    public function edit($id)
     {
-        //
+        $data = TemplateChat::where('id', $id)->first();
+        return view('manajemen.edittemplate')->with('data', $data);
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \App\Http\Requests\UpdateTemplateChatRequest  $request
-     * @param  \App\Models\TemplateChat  $templateChat
-     * @return \Illuminate\Http\Response
-     */
-    public function update(UpdateTemplateChatRequest $request, TemplateChat $templateChat)
+    public function update(Request $request, $id)
     {
-        //
+        $data = [
+            'chat'=>$request->chat
+        ];
+
+        TemplateChat::where('id', $id)->update($data);
+        return redirect()->to('templatepesan')->with('succes', 'Berhasil melakukan update data');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\TemplateChat  $templateChat
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(TemplateChat $templateChat)
+    public function destroy($id)
     {
-        //
+        TemplateChat::findorfail($id)->delete();
+        return back();
     }
 }

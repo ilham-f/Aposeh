@@ -209,13 +209,11 @@ class PegawaiController extends Controller
     public function store(Request $request)
     {
         $validatedData = $request->validate([
-            'email' => 'required|unique:users',
             'password' => 'required',
             'nama' => 'required',
             'alamat' => 'required',
             'notelp' => 'required|unique:users',
         ]);
-        $validatedData['role']='pegawai';
         $validatedData['password']=bcrypt($validatedData['password']);
 
         User::create($validatedData);

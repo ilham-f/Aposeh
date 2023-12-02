@@ -26,6 +26,10 @@ class tambahObatController extends Controller
     {
         return view('pegawai.create-obat');
     }
+    public function create1()
+    {
+        return view('manajemen.create-obat');
+    }
 
     /**
      * Store a newly created resource in storage.
@@ -43,6 +47,17 @@ class tambahObatController extends Controller
 
         Obat::create($data);
         return redirect('pegawai/obat');
+    }
+    public function store1(Request $request)
+    {
+        $data = [
+            'nama_obat'=>$request->nama_obat,
+            'stok' => $request->stok,
+            'harga' => $request->harga,
+        ];
+
+        Obat::create($data);
+        return redirect('manajemen/obat');
     }
 
     /**
